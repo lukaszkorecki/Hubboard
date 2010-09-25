@@ -1,6 +1,6 @@
 # Hubboard
 
-Want to know how pushed latests changes to your company's repo?
+Want to know who and when pushed latests changes to your company's repo?
 
 Want to know who started following something interesting project?
 
