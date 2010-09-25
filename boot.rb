@@ -1,16 +1,13 @@
-# Bootstrap file for Mikrob
+# Bootstrap file for Hubboard
 
 # Add vendor directories to load path
 Dir["vendor/**/lib"].each do |lib_path|
   $LOAD_PATH << lib_path
 end
 
-  $LOAD_PATH << "vendor/wx"
 # load vendor libs
 require 'json'
 require 'simple_http'
-
-# explicit requires of gems unpacked to vendor/
 require 'wx'
 
 # utilities
