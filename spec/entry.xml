@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:PushEvent/331221216</id>
+  <published>2010-09-29T10:10:28-07:00</published>
+  <updated>2010-09-29T10:10:28-07:00</updated>
+  <link type="text/html" rel="alternate" href="http://example.com/001"/>
+  <title>foo pushed to master at test/example</title>
+  <author>
+    <name>foo</name>
+    <uri>http://github.com/foo</uri>
+  </author>
+  <media:thumbnail height="30" width="30" url="https://secure.gravatar.com/avatar/cdb2971213234ed1f05942e71178d3e3?s=30&amp;d=https%3A%2F%2Fgithub.com%2Fimages%2Fgravatars%2Fgravatar-140.png"/>
+  <content type="html">
+    &lt;p&gt;some HTML content&lt;/p&gt;
+</content>
+</entry>

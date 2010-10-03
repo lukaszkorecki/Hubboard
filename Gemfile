@@ -7,5 +7,5 @@ group :test do
   gem 'rspec'
 end
 
-source :rubyforge
-gem 'wxruby'
+#source :rubyforge
+#gem 'wxruby'
