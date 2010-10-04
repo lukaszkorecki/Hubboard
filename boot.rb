@@ -10,6 +10,9 @@ require 'json'
 require 'simple_http'
 require 'wx'
 
+# stuff
+require 'yaml'
+
 # utilities
 require 'lib/default_browser'
 require 'lib/image_cache'
@@ -30,3 +33,6 @@ end
 Dir["models/*.rb"].each do |model_file|
   require model_file.sub(".rb","")
 end
+
+APP_INFO = YAML::load_file('app.yml')
+puts APP_INFO
