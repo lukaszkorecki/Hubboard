@@ -1,3 +1,4 @@
+require 'rubygems'
 namespace :osx do
   OSX_DEV_COMMAND = "arch -i386 /usr/bin/ruby -rubygems -C . app.rb"
   OSX_COMMAND = "arch -i386 /usr/bin/ruby -C . app.rb"
@@ -28,4 +29,8 @@ namespace :app do
   task :package_gems do
     `bundle install vendor --without test --disable-shared-gems --relock`
   end
+end
+desc "run tests"
+task :spec do
+  STDOUT << `spec -c -fn spec`
 end
