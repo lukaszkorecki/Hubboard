@@ -13,7 +13,7 @@ require 'wx'
 # stuff
 require 'yaml'
 
-# utilities
+# application classes
 require 'lib/default_browser'
 require 'lib/image_cache'
 
