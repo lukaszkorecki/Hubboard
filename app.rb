@@ -1,9 +1,8 @@
 require 'boot'
 
-user, token = YAML::load_file('data.yml')
-
 gh = Github::Feed.new do
-  Github.get_feed user, token
+  u,t = Github.git_config
+  Github.get_feed u,t
 end
 
 gh.parse
