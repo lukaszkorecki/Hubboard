@@ -1,4 +1,4 @@
-require File.dirname(__FILE__)+"/../lib/github_feed"
+require File.dirname(__FILE__)+"/../lib/github/feed"
 
 describe "Github Module" do
   describe "Feed" do
