@@ -27,7 +27,7 @@ end
 namespace :app do
   desc "download and unpack all gems using bundler"
   task :package_gems do
-    `bundle install vendor --without test --disable-shared-gems --relock`
+    `bundle install vendor --without test --disable-shared-gems`
   end
 end
 desc "run tests"
