@@ -22,16 +22,14 @@ module Github
     def parse
       doc = REXML::Document.new(@feed_content)
       entries = [].tap do | collection |
-        doc.root.elements.select { |e| e.name =~ /entry/ }.each do | el |
+        doc.root.elements.select { |e| e.name =~ /entry/ }.reverse.each do | el |
           collection << el
         end
       end
       entries.each do | entry |
         _id = get_data_from_element(entry, 'id').gsub(/\D/, "")
         @entries[_id] ||= parse_entry(_id, entry)
-        unless @entries.key? _id
-          @e_order << _id
-        end
+        @e_order << _id unless @e_order.include? _id
       end
       @entries
     end
