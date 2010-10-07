@@ -51,7 +51,7 @@ describe "Github Module" do
       end
       it "should parse the the test feed and get two entries" do
         @entries.length.should == 2
-        @f.e_order.length.should == 2
+        @f.id_list.length.should == 2
       end
       it "should parse first entry and create a hash of proper structure" do
         [:gh_id, :content, :title, :link, :author, :published].each do | k |

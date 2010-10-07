@@ -3,10 +3,10 @@ require 'yaml'
 
 module Github
   class Feed
-    attr_reader :entries, :feed_content, :e_order
+    attr_reader :entries, :feed_content, :id_list
     def initialize
       @feed_content = yield if block_given?
-      @e_order = []
+      @id_list = []
       @entries = []
     end
 ## Interface functions ##
@@ -18,7 +18,7 @@ module Github
 
     # parses loaded feed contents into list of hashes
     # which are stores in memory cache (@entries)
-    # order is preserved by @e_order array
+    # order is preserved by @id_list array
     def parse
       doc = REXML::Document.new(@feed_content)
       entries = [].tap do | collection |
@@ -28,9 +28,9 @@ module Github
       end
       entries.each do | entry |
         _id = get_data_from_element(entry, 'id').gsub(/\D/, "")
-        unless @e_order.include? _id
+        unless @id_list.include? _id
           @entries <<  parse_entry(_id, entry)
-          @e_order << _id 
+          @id_list << _id 
         end
       end
       @entries
