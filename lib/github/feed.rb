@@ -7,7 +7,7 @@ module Github
     def initialize
       @feed_content = yield if block_given?
       @e_order = []
-      @entries = {}
+      @entries = []
     end
 ## Interface functions ##
     def content= feed
@@ -22,14 +22,16 @@ module Github
     def parse
       doc = REXML::Document.new(@feed_content)
       entries = [].tap do | collection |
-        doc.root.elements.select { |e| e.name =~ /entry/ }.reverse.each do | el |
+        doc.root.elements.select { |e| e.name =~ /entry/ }.each do | el |
           collection << el
         end
       end
       entries.each do | entry |
         _id = get_data_from_element(entry, 'id').gsub(/\D/, "")
-        @entries[_id] ||= parse_entry(_id, entry)
-        @e_order << _id unless @e_order.include? _id
+        unless @e_order.include? _id
+          @entries <<  parse_entry(_id, entry)
+          @e_order << _id 
+        end
       end
       @entries
     end

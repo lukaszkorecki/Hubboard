@@ -51,6 +51,7 @@ describe "Github Module" do
       end
       it "should parse the the test feed and get two entries" do
         @entries.length.should == 2
+        @f.e_order.length.should == 2
       end
       it "should parse first entry and create a hash of proper structure" do
         [:gh_id, :content, :title, :link, :author, :published].each do | k |
@@ -70,7 +71,18 @@ describe "Github Module" do
         
       end
       
-      
+      describe "should store parsed entries in correct order" do
+        it "should fill the entries in order" do
+          @entries.first[:gh_id].should == '2008331221216'
+          @entries[1][:gh_id].should == '2008331210264'
+        end
+        it "should not add entries which exist already" do
+          @f.content = @atom
+          @f.parse
+          @f.entries.length.should == 2
+        end
+        
+      end
     end
   end
 end
