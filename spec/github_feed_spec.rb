@@ -6,6 +6,7 @@ describe "Github Module" do
       @ghf = Github::Feed.new
 
       @atom ||= File.new(File.dirname(__FILE__)+'/test.atom','r').read
+      @atom_update ||= File.new(File.dirname(__FILE__)+'/test_update.atom','r').read
 
       @entry_c ||= File.new(File.dirname(__FILE__)+"/entry.xml",'r').read
       @entry ||= REXML::Document.new(@entry_c).root
@@ -80,6 +81,22 @@ describe "Github Module" do
           @f.content = @atom
           @f.parse
           @f.entries.length.should == 2
+        end
+        
+      end
+      describe "adding/updating entries" do
+        before :each do
+          @f.content = @atom_update
+          @f.parse_and_upade
+        end
+        it "should add new entries" do
+          @f.entries.length.should == 4
+        end
+        it "should append new entries and preserve their order" do
+          ['20990833400000', '2008973314005500', '2008331221216', '2008331210264'].each_with_index do | gh_id, index|
+            
+            @f.entries[index][:gh_id].should == gh_id
+          end
         end
         
       end

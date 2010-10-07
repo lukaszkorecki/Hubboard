@@ -19,12 +19,16 @@ module Github
     # parses loaded feed contents into list of hashes
     # which are stores in memory cache (@entries)
     # order is preserved by @id_list array
-    def parse
+    def parse(is_update=false)
       doc = REXML::Document.new(@feed_content)
       entries = [].tap do | collection |
         doc.root.elements.select { |e| e.name =~ /entry/ }.each do | el |
           collection << el
         end
+      end
+      if is_update
+        entries.reverse! 
+        @entries.reverse!
       end
       entries.each do | entry |
         _id = get_data_from_element(entry, 'id').gsub(/\D/, "")
@@ -33,7 +37,12 @@ module Github
           @id_list << _id 
         end
       end
+      @entries.reverse! if is_update
       @entries
+    end
+
+    def parse_and_upade
+      parse true
     end
 
     # Parses one feed element into a entry containing all needed information
