@@ -1,7 +1,6 @@
 require 'lib/github/feed'
 require 'lib/github/user'
-require 'yaml'
-require 'simplehttp'
+
 module Github
 
   # net operations
@@ -15,9 +14,27 @@ module Github
     t_url = FEED_URL.sub("{username}", username).sub("{token}", token)
     http_get t_url
   end
+
   def self.get_api path, auth=nil
     # TODO handle basic auth
     http_get API_URL+path
+  end
+
+  def self.method_missing name, *args
+    case name.to_s.split("get_").last
+    when /user_info/
+      if args.first.class == String
+        # unauthenticated user
+        get_api "/user/show/#{args.first}"
+
+      elsif args.first.class == Hash
+        # authenticated user
+        get_api "/user/show?#{args.first.map{ |k,v|  "#{k}=#{v}"}.join("&")}"
+      end
+    else
+      super(name, args)
+      
+    end
   end
 
 # get stuff from git.config
