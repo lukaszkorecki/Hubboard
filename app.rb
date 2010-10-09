@@ -1,10 +1,5 @@
 require 'boot'
 
-gh = Github::Feed.new do
-  u,t = Github.git_config
-  Github.get_feed u,t
-end
+user_name, token = Github.git_config
 
-gh.parse
 
-puts gh.entries.to_yaml
