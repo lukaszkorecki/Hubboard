@@ -27,13 +27,9 @@ module Github
     end
 
     def info user=nil
-      d = if block_given?
-            yield(user)
-          else
-            Github.get_user_info user
-          end
-        @data = YAML::load d
-        self
+      raise "[Exception] No user name passed" if user.nil?
+      @data = YAML::load yield(user)
+      self
     end
   end
 end
