@@ -26,9 +26,21 @@ describe "Github Module" do
         @atom
       end
       r.feed_content.should == @atom
-      @ghf.content = @atom
+      @ghf.content { @atom }
       @ghf.feed_content.should == @atom
     end
+    it "should assign feed content if passed as a block" do
+      @ghf.content do
+        @atom
+      end
+      @ghf.feed_content.should == @atom
+    end
+    
+    it "should assign via function call" do
+      @ghf.content @atom
+      @ghf.feed_content.should == @atom
+    end
+    
     it "should not assign anythong to feed_content if block isn't passed" do
       @ghf.feed_content.should == nil
     end
@@ -78,7 +90,7 @@ describe "Github Module" do
           @entries[1][:gh_id].should == '2008331210264'
         end
         it "should not add entries which exist already" do
-          @f.content = @atom
+          @f.content  { @atom }
           @f.parse
           @f.entries.length.should == 2
         end
@@ -86,7 +98,7 @@ describe "Github Module" do
       end
       describe "adding/updating entries" do
         before :each do
-          @f.content = @atom_update
+          @f.content { @atom_update }
           @f.parse_and_upade
         end
         it "should add new entries" do

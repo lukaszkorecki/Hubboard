@@ -1,7 +1,15 @@
-require 'rexml/document'
-require 'yaml'
+# Downloads the user feed and parses it.
+# The block you pass downloads the feed for given user and this user's token
+# gh = Github::Feed.new do
+#   Github.get_feed user_name, token
+# end
+# 
+# gh.parse parses downloaded feed
+# 
+# puts gh.entries[0..3].to_yaml
 
 module Github
+  require 'rexml/document'
   class Feed
     attr_reader :entries, :feed_content, :id_list
     def initialize
@@ -10,8 +18,11 @@ module Github
       @entries = []
     end
 ## Interface functions ##
-    def content= feed
-      @feed_content = feed
+
+    def content feed=nil
+      @feed_content = yield if block_given?
+      @feed_content = feed unless feed.nil?
+
     end
 
 ## Feed Parsing Functions ##
