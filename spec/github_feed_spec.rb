@@ -5,10 +5,10 @@ describe "Github Module" do
     before :each do
       @ghf = Github::Feed.new
 
-      @atom ||= File.new(File.dirname(__FILE__)+'/test.atom','r').read
-      @atom_update ||= File.new(File.dirname(__FILE__)+'/test_update.atom','r').read
+      @atom ||= File.new(File.dirname(__FILE__)+'/fixtures/test.atom','r').read
+      @atom_update ||= File.new(File.dirname(__FILE__)+'/fixtures/test_update.atom','r').read
 
-      @entry_c ||= File.new(File.dirname(__FILE__)+"/entry.xml",'r').read
+      @entry_c ||= File.new(File.dirname(__FILE__)+"/fixtures/entry.xml",'r').read
       @entry ||= REXML::Document.new(@entry_c).root
 
       xml =<<-XML
