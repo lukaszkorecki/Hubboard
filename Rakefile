@@ -29,6 +29,10 @@ namespace :app do
   task :package_gems do
     `bundle install vendor --without test --disable-shared-gems`
   end
+  desc "regenrates xrc class loader from xrc file"
+  task  :wx_generate do
+    STDOUT << `xrcise views/hubboard_views.xrc > views/hubboard_views.rb`
+  end
 end
 desc "run tests"
 task :spec do

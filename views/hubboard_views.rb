@@ -4,7 +4,7 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Oct 10 15:13:11 +0100 2010
+# Generated at: Sun Oct 10 15:15:02 +0100 2010
 
 class MainFrame < Wx::Frame
 	
