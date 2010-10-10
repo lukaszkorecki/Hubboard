@@ -1,7 +1,7 @@
 require 'boot'
 
 class Hubboard < Wx::App
-  attr_reader :gh_login, :gh_token
+  attr_reader :gh_login, :gh_token, :image_cache
   def on_init
     # gh vars
     @gh_login, @gh_token = Github.git_config
@@ -18,8 +18,12 @@ class Hubboard < Wx::App
     evt_idle { Thread.pass }
 
     # lets show some stuff, eh?
-    @main_frame = MainFrame.new
+    @main_frame = HMainFrame.new
     @main_frame.show
+
+    @image_cache = ImageCache.new('hubboard')
+    @image_cache.setup ['avatars']
+    @image_cache.rebuild
   end
 end
 
@@ -28,3 +32,5 @@ end
 App = Hubboard.new
 
 App.main_loop
+
+
