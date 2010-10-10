@@ -21,15 +21,46 @@
 module Github
   class User
 
-    attr_reader :data
-    def initialize user=nil
-      info user unless user.nil?
+    attr_reader :company, :name, :gravatar_id, :created_at,
+            :location, :blog, :public_gist_count, :public_repo_count,
+            :following_count, :id, :type, :followers_count, :login, :email,
+            :data
+
+    def initialize user_d
+      raise '[Exception] No user name or login/token passed' if user_d.nil?
+      d = if block_given?
+            (YAML::load yield(user_d))
+          else
+            Github.get_user_info user_d
+          end
+      @data = d['data']['user']
+      @data.each do | name, val |
+        instance_variable_set :"@#{name}", val
+      end
+      self
     end
 
-    def info user=nil
-      raise '[Exception] No user name passed' if user.nil?
-      @data = (YAML::load yield(user))['data']['user']
-      self
+    def avatar
+      @avatar ||= "http://www.gravatar.com/avatar/"+@gravatar_id+"?s=48"
+    end
+    def to_html
+      html =<<-HTML
+        <p><b>#{@name}</b> #{@login}</p>
+        <p>Since: #{@created_at}</p>
+        <p>Company: #{@company}</p>
+        <p><a href="#{@blog}">#{@blog}</p>
+        <p>
+          <ul>
+            <li>Followers count: #{@followers_count}</li>
+            <li>Following count: #{@following_count}</li>
+            <li>Repo count: #{@public_repo_count}</li>
+            <li>Gist count: #{@public_gist_count}</li>
+          </ul>
+        </p>
+      HTML
+      html
     end
   end
 end
+
+
