@@ -159,7 +159,7 @@
                                     <property name="name">user_avatar</property>
                                     <property name="permission">protected</property>
                                     <property name="pos"></property>
-                                    <property name="size"></property>
+                                    <property name="size">80,80</property>
                                     <property name="subclass"></property>
                                     <property name="tooltip"></property>
                                     <property name="validator_data_type"></property>
