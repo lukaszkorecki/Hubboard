@@ -15,22 +15,21 @@ describe 'User' do
     u = User.new('loluser') do
       @user_yaml
     end
-    u.data.should == @user_data['data']['user']
+    u.data.should == @user_data['user']
   end
 
   it "should download the user data if block is not fiven" do
-    Github.stub!(:get_user_info).and_return(@user_data)
-
-    u = User.new('loluser').data.should == @user_data['data']['user']
+    Github.stub!(:get_user_info).and_return(@user_yaml)
+    User.new('loluser').data.should == @user_data['user']
   end
   it "should set variables accordingly to the data retreived" do
     u = User.new('loluser') { @user_yaml }
     u.login.should == 'loluser'
     u.type.should == 'User'
-    u.avatar.should == 'http://www.gravatar.com/avatar/f6681e53f53098ce1c09ae30811ac535?s=48'
+    u.avatar.should == 'http://www.gravatar.com/avatar/f6681e53f53098ce1c09ae30811ac535.jpg'
   end
   it "should render summary html" do
-    Github.stub!(:get_user_info).and_return(@user_data)
+    Github.stub!(:get_user_info).and_return(@user_yaml)
     u = User.new('loluser')
 
     u.to_html.gsub(/\W/,'').should == '<p><b>Łukasz Korecki</b> loluser</p>
