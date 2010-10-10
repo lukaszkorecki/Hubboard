@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,20999333:/test.fixture</id>
+  <link type="text/html" rel="alternate" href="lol"/>
+  <link type="application/atom+xml" rel="self" href="lol"/>
+  <title>Private Feed for testuser</title>
+  <updated>2010-09-30T10:10:28-07:00</updated>
+  <entry>
+    <id>tag:github.com,209908:PushEvent/33400000</id>
+    <published>2010-09-30T10:10:28-07:00</published>
+    <updated>2010-09-30T10:10:28-07:00</updated>
+    <link type="text/html" rel="alternate" href="http://example.com/001"/>
+    <title>foo pushed to master at test/example</title>
+    <author>
+      <name>foo</name>
+      <uri>http://github.com/foo</uri>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://secure.gravatar.com/avatar/cdb2971213234ed1f05942e71178d3e3?s=30&amp;d=https%3A%2F%2Fgithub.com%2Fimages%2Fgravatars%2Fgravatar-140.png"/>
+    <content type="html">
+      &lt;p&gt;some HTML content&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <id>tag:github.com,200897:PushEvent/3314005500</id>
+    <published>2010-09-30T09:55:11-07:00</published>
+    <updated>2010-09-30T09:55:11-07:00</updated>
+    <link type="text/html" rel="alternate" href="http://example.com/002"/>
+    <title>bar pushed to master at test/example</title>
+    <author>
+      <name>bar</name>
+      <uri>http://github.com/bar</uri>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://secure.gravatar.com/avatar/cdb2971213234ed1f05942e71178d3e3?s=30&amp;d=https%3A%2F%2Fgithub.com%2Fimages%2Fgravatars%2Fgravatar-140.png"/>
+    <content type="html">
+      more html content
+</content>
+  </entry>
+</feed>
+
+

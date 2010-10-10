@@ -1,39 +1,59 @@
-require 'rexml/document'
-require 'yaml'
+# Downloads the user feed and parses it.
+# The block you pass downloads the feed for given user and this user's token
+# gh = Github::Feed.new do
+#   Github.get_feed user_name, token
+# end
+# 
+# gh.parse parses downloaded feed
+# 
+# puts gh.entries[0..3].to_yaml
 
 module Github
+  require 'rexml/document'
   class Feed
-    attr_reader :entries, :feed_content, :e_order
+    attr_reader :entries, :feed_content, :id_list
     def initialize
       @feed_content = yield if block_given?
-      @e_order = []
-      @entries = {}
+      @id_list = []
+      @entries = []
     end
 ## Interface functions ##
-    def content= feed
-      @feed_content = feed
+
+    def content feed=nil
+      @feed_content = yield if block_given?
+      @feed_content = feed unless feed.nil?
+
     end
 
 ## Feed Parsing Functions ##
 
     # parses loaded feed contents into list of hashes
     # which are stores in memory cache (@entries)
-    # order is preserved by @e_order array
-    def parse
+    # order is preserved by @id_list array
+    def parse(is_update=false)
       doc = REXML::Document.new(@feed_content)
       entries = [].tap do | collection |
         doc.root.elements.select { |e| e.name =~ /entry/ }.each do | el |
           collection << el
         end
       end
+      if is_update
+        entries.reverse! 
+        @entries.reverse!
+      end
       entries.each do | entry |
         _id = get_data_from_element(entry, 'id').gsub(/\D/, "")
-        @entries[_id] ||= parse_entry(_id, entry)
-        unless @entries.key? _id
-          @e_order << _id
+        unless @id_list.include? _id
+          @entries <<  parse_entry(_id, entry)
+          @id_list << _id 
         end
       end
+      @entries.reverse! if is_update
       @entries
+    end
+
+    def parse_and_upade
+      parse true
     end
 
     # Parses one feed element into a entry containing all needed information
