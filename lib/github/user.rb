@@ -27,8 +27,8 @@ module Github
     end
 
     def info user=nil
-      raise "[Exception] No user name passed" if user.nil?
-      @data = YAML::load yield(user)
+      raise '[Exception] No user name passed' if user.nil?
+      @data = (YAML::load yield(user))['data']['user']
       self
     end
   end
