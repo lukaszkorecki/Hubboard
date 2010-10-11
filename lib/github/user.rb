@@ -28,12 +28,13 @@ module Github
 
     def initialize user_d
       raise '[Exception] No user name or login/token passed' if user_d.nil?
-      d = if block_given?
+      yaml_data = if block_given?
             yield(user_d)
           else
             Github.get_user_info user_d
           end
-      d = YAML::load d
+      return false  unless yaml_data
+      d = YAML::load yaml_data
       d['user'].each { | name, val | instance_variable_set :"@#{name}", val }
 
       @data = d['user']

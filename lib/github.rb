@@ -17,7 +17,12 @@ module Github
 
   def self.get_api path, auth=nil
     # TODO handle basic auth
-    http_get API_URL+path
+    begin
+      http_get API_URL+path
+    rescue SocketError
+      return false
+    end
+
   end
 
   def self.method_missing name, *args
