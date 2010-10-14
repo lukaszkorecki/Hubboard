@@ -36,4 +36,3 @@ Dir["models/*.rb"].each do |model_file|
 end
 
 APP_INFO = YAML::load_file('app.yml')
-puts APP_INFO

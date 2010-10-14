@@ -14,7 +14,7 @@ class ImageCache
   end
 
   # creates the image cache directory (if it doesnt exist)
-  # and any additional subdirectories paassed as an array
+  # and any additional subdirectories passed as an array
   # @param subdirs Array = names of additional subdirectories stored in cache folder
   def setup subdirs
     FileUtils.mkdir_p @root
@@ -38,15 +38,19 @@ class ImageCache
     @cached_list
   end
 
-  # stores or retreives the path to the file based on its url
-  # and imaage cache subdir
+  # stores or retrieves the path to the file based on its url
+  # and image cache subdir
   # @param url String = url to the file (http://example.com/img/elo.jpg)
   # @param subdir String = optional subdirectory (needs to be created in setup())
-  def do_it  url, subdir=nil
-    file_name = url.split("/").last
+  def do_it  url, config
+    subdir = config[:subdir] if config.key? :subdir
+    extension = config[:extension] if config.key? :extension
+    puts "Caching: #{url}"
+    file_name = url.split("/").last.gsub(/\W/,'')
     path = [@root, @ds]
-    path << "#{subdir}#{@ds}" unless subdir
+    path << "#{subdir}#{@ds}" if subdir
     path << file_name
+    path << ".#{extension}" if extension
     @cached_list[file_name] ||= save_to_disk(url, path.join(""))
   end
 
