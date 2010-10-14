@@ -4,11 +4,12 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Mon Oct 11 08:23:35 +0100 2010
+# Generated at: Thu Oct 14 23:00:11 +0100 2010
 
 class MainFrame < Wx::Frame
 	
-	attr_reader :user_panel, :user_avatar, :user_name
+	attr_reader :user_panel, :user_avatar, :user_name, :gh_details_html,
+              :timeline, :timeline_scroll
 	
 	def initialize(parent = nil)
 		super()
@@ -32,6 +33,9 @@ class MainFrame < Wx::Frame
 		@user_panel = finder.call("user_panel")
 		@user_avatar = finder.call("user_avatar")
 		@user_name = finder.call("user_name")
+		@gh_details_html = finder.call("gh_details_html")
+		@timeline = finder.call("timeline")
+		@timeline_scroll = finder.call("timeline_scroll")
 		if self.class.method_defined? "on_init"
 			self.on_init()
 		end
