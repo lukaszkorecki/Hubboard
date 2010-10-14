@@ -1,6 +1,6 @@
 require 'boot'
 
-class Hubboard < Wx::App
+class Application < Wx::App
   attr_reader :gh_login, :gh_token, :image_cache
   def on_init
     # gh vars
@@ -29,7 +29,7 @@ end
 
 # we need application instance so that
 # it can be used by other classes
-App = Hubboard.new
+App = Application.new
 
 App.main_loop
 
