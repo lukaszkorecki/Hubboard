@@ -1,28 +1,31 @@
 require File.dirname(__FILE__)+'/../views/html_templates'
+require File.dirname(__FILE__)+'/../lib/github/user'
+require 'yaml'
 describe "HtmlTemplate" do
   describe "User template" do
     before :each do
-      class Ob; def method_missing(*args); return args.first.to_s; end; end
-      @user_obj = Ob.new
+      @user_yaml ||= File.new(File.dirname(__FILE__)+'/fixtures/user.yaml').read
+    @user_obj ||= Github::User.new('loluser') do
+      @user_yaml
     end
-    it 'should produce a nice html template using objects instance variables' do
+    end
+    it 'should produce a nice html containgin user info and github link' do
       html = HtmlTemplates::User.to_html(@user_obj)
-      expected = "<div>
-      <p>
-        <a href='http://github.com/login'>login</a>
+      html.should include("
+        <a href='http://github.com/loluser'>loluser</a>
         <br>
-        <a href='blog'>blog</a>
-        <br>
-        Member since: created_at
-      </p>
-      <p>
+        <a href='http://coffeesounds.com'>http://coffeesounds.com</a>")
+    end
+    it 'should render github counters' do
+      exp = "<p>
         <ul>
-          <li>Followers: followers_count</li>
-          <li>Repos: public_repo_count</li>
-          <li>Gists: public_gist_count</li>
+          <li>Followers: 22</li>
+          <li>Repos: 18</li>
+          <li>Gists: 70</li>
         </ul>
       </p>"
-      html.strip.should == expected.strip
+      html = HtmlTemplates::User.to_html(@user_obj)
+      html.should include exp
     end
   end
 end

@@ -3,24 +3,25 @@
 # as long as the interface doesn't change it stay as it is
 # and get faster when it needs to
 module HtmlTemplates
+  require 'erb'
   class User
     def self.to_html user
-      @u = user
-      t = "<div>
+      @t = ERB.new "<div>
       <p>
-        <a href='http://github.com/#{ @u.login }'>#{ @u.login }</a>
+        <a href='http://github.com/<%= @login %>'><%= @login %></a>
         <br>
-        <a href='#{ @u.blog }'>#{ @u.blog }</a>
+        <a href='<%= @blog %>'><%= @blog %></a>
         <br>
-        Member since: #{ @u.created_at }
+        Member since: <%= @created_at %>
       </p>
       <p>
         <ul>
-          <li>Followers: #{ @u.followers_count }</li>
-          <li>Repos: #{ @u.public_repo_count }</li>
-          <li>Gists: #{ @u.public_gist_count }</li>
+          <li>Followers: <%= @followers_count %></li>
+          <li>Repos: <%= @public_repo_count %></li>
+          <li>Gists: <%= @public_gist_count %></li>
         </ul>
       </p>"
+      @t.result user.get_binding
     end
   end
 end
