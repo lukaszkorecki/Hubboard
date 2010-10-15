@@ -26,6 +26,9 @@ module Github
             :following_count, :id, :type, :followers_count, :login, :email,
             :data
 
+    def get_binding
+      binding
+    end
     def initialize user_d
       raise '[Exception] No user name or login/token passed' if user_d.nil?
       yaml_data = if block_given?
@@ -45,24 +48,8 @@ module Github
     def avatar
       @avatar ||= "http://www.gravatar.com/avatar/"+@gravatar_id+".jpg"
     end
-    def to_html
-      html =<<-HTML
-        <p><b>#{@name}</b> #{@login}</p>
-        <p>Since: #{@created_at}</p>
-        <p>Company: #{@company}</p>
-        <p><a href="#{@blog}">#{@blog}</p>
-        <p>
-          <ul>
-            <li>Followers count: #{@followers_count}</li>
-            <li>Following count: #{@following_count}</li>
-            <li>Repo count: #{@public_repo_count}</li>
-            <li>Gist count: #{@public_gist_count}</li>
-          </ul>
-        </p>
-      HTML
-      html
-    end
   end
+
 end
 
 
