@@ -17,8 +17,9 @@ class HMainFrame < MainFrame
   end
 
   def show_user_details
-    @user_name.label = "lol: #{@gh_user.name} #{@gh_user.login}"
-    @user_avatar.set_bitmap url_to_bitmap @gh_user.avatar
+    @user_name.label = @gh_user.name # (#{@gh_user.login})"
+    @user_avatar.bitmap = url_to_bitmap @gh_user.avatar
+    @gh_details_html.page = HtmlTemplates::User.to_html @gh_user
   end
 private
   def url_to_bitmap img_url
