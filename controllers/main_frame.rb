@@ -1,7 +1,18 @@
 class HMainFrame < MainFrame
   include Github
   def on_init
+    @timeline_scroller.sizer.layout
+    @timeline_scroller.set_scrollbars(20,20, 20,20,0,0,true)
+
     get_user_details { show_user_details }
+    Thread.new do
+      (1..10).each do
+        p = HEventPanel.new @timeline_contents
+        @timeline_contents.sizer.add p
+        @timeline_contents.layout
+        @timeline_contents.sizer.layout
+      end
+    end
   end
 
   def get_user_details
@@ -19,7 +30,7 @@ class HMainFrame < MainFrame
   def show_user_details
     @user_name.label = @gh_user.name # (#{@gh_user.login})"
     @user_avatar.bitmap = url_to_bitmap @gh_user.avatar
-    @gh_details_html.page = HtmlTemplates::User.to_html @gh_user
+    @details_html.page = HtmlTemplates::User.to_html @gh_user
   end
 private
   def url_to_bitmap img_url
