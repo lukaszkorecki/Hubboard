@@ -5,19 +5,17 @@ class HMainFrame < MainFrame
     @timeline_scroller.set_scrollbars(20,20, 20,20,0,0,true)
 
     get_user_details { show_user_details }
+    get_gh_dashboard { show_dashboard }
+  end
+
+  def get_gh_dashboard
     Thread.new do
-      (1..10).each do
-        begin
-          p = HEventPanel.new @timeline_scroller
-          p.body = "<p>Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>"
-          @timeline_scroller.sizer.add p, Wx::ID_ANY, Wx::GROW|Wx::ALL
-        rescue => e
-          STDOUT << e.to_yaml
-        end
+      @entries = Feed.new { Github.get_feed App.gh_login, App.gh_token }.parse.entries
+      if @entries
+        yield
       end
     end
   end
-
   def get_user_details
     Thread.new do
       @gh_user = User.new(:login => App.gh_login, :token => App.gh_token)
@@ -34,6 +32,17 @@ class HMainFrame < MainFrame
     @user_name.label = @gh_user.name # (#{@gh_user.login})"
     @user_avatar.bitmap = url_to_bitmap @gh_user.avatar
     @details_html.page = HtmlTemplates::User.to_html @gh_user
+  end
+  def show_dashboard
+    @entries.each do |element|
+      ev = HEventPanel.new @timeline_scroller
+    begin
+      ev.body = element
+  rescue => e
+    STDOUT << e.to_yaml
+    end
+      @timeline_scroller.sizer.add ev, 1, Wx::GROW|Wx::ALL
+    end
   end
 private
   def url_to_bitmap img_url
