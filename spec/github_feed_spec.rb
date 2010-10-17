@@ -102,7 +102,7 @@ describe "Github Module" do
       describe "adding/updating entries" do
         before :each do
           @f.content { @atom_update }
-          @f.parse_and_upade
+          @f.parse_and_update
         end
         it "should add new entries" do
           @f.entries.length.should == 4

@@ -52,7 +52,7 @@ module Github
       @entries
     end
 
-    def parse_and_upade
+    def parse_and_update
       parse true
     end
 
