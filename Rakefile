@@ -35,6 +35,11 @@ namespace :app do
   end
 end
 desc "run tests"
-task :spec do
+task :spec_details do
   STDOUT << `spec -c -fn spec`
 end
+task :spec do
+  STDOUT << `spec spec`
+end
+
+task :default => [:spec]
