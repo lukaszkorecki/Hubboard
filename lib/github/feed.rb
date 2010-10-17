@@ -3,9 +3,9 @@
 # gh = Github::Feed.new do
 #   Github.get_feed user_name, token
 # end
-# 
+#
 # gh.parse parses downloaded feed
-# 
+#
 # puts gh.entries[0..3].to_yaml
 
 module Github
@@ -38,14 +38,14 @@ module Github
         end
       end
       if is_update
-        entries.reverse! 
+        entries.reverse!
         @entries.reverse!
       end
       entries.each do | entry |
         _id = get_data_from_element(entry, 'id').gsub(/\D/, "")
         unless @id_list.include? _id
           @entries <<  parse_entry(_id, entry)
-          @id_list << _id 
+          @id_list << _id
         end
       end
       @entries.reverse! if is_update
