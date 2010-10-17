@@ -7,10 +7,13 @@ class HMainFrame < MainFrame
     get_user_details { show_user_details }
     Thread.new do
       (1..10).each do
-        p = HEventPanel.new @timeline_contents
-        @timeline_contents.sizer.add p
-        @timeline_contents.layout
-        @timeline_contents.sizer.layout
+        begin
+          p = HEventPanel.new @timeline_scroller
+          p.body = "<p>Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>"
+          @timeline_scroller.sizer.add p, Wx::ID_ANY, Wx::GROW|Wx::ALL
+        rescue => e
+          STDOUT << e.to_yaml
+        end
       end
     end
   end
