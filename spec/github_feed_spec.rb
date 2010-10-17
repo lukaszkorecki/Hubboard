@@ -35,12 +35,12 @@ describe "Github Module" do
       end
       @ghf.feed_content.should == @atom
     end
-    
+
     it "should assign via function call" do
       @ghf.content @atom
       @ghf.feed_content.should == @atom
     end
-    
+
     it "should not assign anythong to feed_content if block isn't passed" do
       @ghf.feed_content.should == nil
     end
@@ -81,9 +81,12 @@ describe "Github Module" do
         it "get url from an attribute" do
           @e[:link].should == 'http://example.com/001'
         end
-        
+        it 'should unescape html entities' do
+          @e[:content].should == "<p>some HTML content</p>"
+        end
+
       end
-      
+
       describe "should store parsed entries in correct order" do
         it "should fill the entries in order" do
           @entries.first[:gh_id].should == '2008331221216'
@@ -94,7 +97,7 @@ describe "Github Module" do
           @f.parse
           @f.entries.length.should == 2
         end
-        
+
       end
       describe "adding/updating entries" do
         before :each do
@@ -106,11 +109,11 @@ describe "Github Module" do
         end
         it "should append new entries and preserve their order" do
           ['20990833400000', '2008973314005500', '2008331221216', '2008331210264'].each_with_index do | gh_id, index|
-            
+
             @f.entries[index][:gh_id].should == gh_id
           end
         end
-        
+
       end
     end
   end
