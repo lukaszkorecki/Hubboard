@@ -4,12 +4,12 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sat Oct 16 23:03:57 +0100 2010
+# Generated at: Sun Oct 17 16:28:22 +0100 2010
 
 class MainFrame < Wx::Frame
 	
 	attr_reader :user_panel, :user_name, :user_avatar, :details_html,
-              :timeline, :timeline_scroller, :timeline_contents
+              :timeline_scroller
 	
 	def initialize(parent = nil)
 		super()
@@ -34,9 +34,7 @@ class MainFrame < Wx::Frame
 		@user_name = finder.call("user_name")
 		@user_avatar = finder.call("user_avatar")
 		@details_html = finder.call("details_html")
-		@timeline = finder.call("timeline")
 		@timeline_scroller = finder.call("timeline_scroller")
-		@timeline_contents = finder.call("timeline_contents")
 		if self.class.method_defined? "on_init"
 			self.on_init()
 		end
@@ -50,11 +48,11 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sat Oct 16 23:03:57 +0100 2010
+# Generated at: Sun Oct 17 16:28:22 +0100 2010
 
 class EventPanel < Wx::Panel
 	
-	attr_reader :user_name, :user_avatar, :details_html
+	attr_reader :user_name, :user_avatar, :contents_html
 	
 	def initialize(parent = nil)
 		super()
@@ -77,7 +75,7 @@ class EventPanel < Wx::Panel
 		
 		@user_name = finder.call("user_name")
 		@user_avatar = finder.call("user_avatar")
-		@details_html = finder.call("details_html")
+		@contents_html = finder.call("contents_html")
 		if self.class.method_defined? "on_init"
 			self.on_init()
 		end
