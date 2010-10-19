@@ -14,7 +14,7 @@ class Application < Wx::App
     # "scheduler" do the rest
     t = Wx::Timer.new(self, 55)
     evt_timer(55) { Thread.pass }
-    t.start(1)
+    t.start(100)
     evt_idle { Thread.pass }
 
     # lets show some stuff, eh?
