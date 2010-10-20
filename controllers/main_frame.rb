@@ -36,11 +36,7 @@ class HMainFrame < MainFrame
   def show_dashboard
     @entries.each do |element|
       ev = HEventPanel.new @timeline_scroller
-    begin
       ev.body = element
-  rescue => e
-    STDOUT << e.to_yaml
-    end
       @timeline_scroller.sizer.add ev, 1, Wx::GROW|Wx::ALL
     end
   end
