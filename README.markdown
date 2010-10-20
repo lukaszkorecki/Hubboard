@@ -11,3 +11,5 @@ Want to stop using your browser for checking that stuff?
 Want to get notified about it with you favorite desktop notification tool?
 
 ## Use hubboard!
+
+![very early screenshot](http://img.skitch.com/20101020-pjfaffyyt6wacnpspu9fhu3dst.jpg)
