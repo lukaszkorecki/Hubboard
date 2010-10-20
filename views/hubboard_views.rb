@@ -4,7 +4,7 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Oct 17 21:49:29 +0100 2010
+# Generated at: Wed Oct 20 22:40:45 +0100 2010
 
 class MainFrame < Wx::Frame
 	
@@ -48,12 +48,12 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Oct 17 21:49:29 +0100 2010
+# Generated at: Wed Oct 20 22:40:45 +0100 2010
 
 class EventPanel < Wx::Panel
 	
 	attr_reader :user_avatar, :username_link, :title_label,
-              :contents_toggle, :contents_html
+              :contents_html
 	
 	def initialize(parent = nil)
 		super()
@@ -77,7 +77,6 @@ class EventPanel < Wx::Panel
 		@user_avatar = finder.call("user_avatar")
 		@username_link = finder.call("username_link")
 		@title_label = finder.call("title_label")
-		@contents_toggle = finder.call("contents_toggle")
 		@contents_html = finder.call("contents_html")
 		if self.class.method_defined? "on_init"
 			self.on_init()
