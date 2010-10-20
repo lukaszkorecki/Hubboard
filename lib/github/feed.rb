@@ -52,7 +52,7 @@ module Github
       @entries
     end
 
-    def parse_and_upade
+    def parse_and_update
       parse true
     end
 
@@ -61,7 +61,7 @@ module Github
     def parse_entry _id, entry
      {
         :gh_id => _id,
-        :content => get_data_from_element(entry, 'content').gsub("&lt;",'<').gsub("&gt;",'>'),
+        :content => get_data_from_element(entry, 'content'),
         :title => get_data_from_element(entry, 'title'),
         :link => get_data_from_element(entry, 'link', :attribute, 'href'),
         :author => get_author(entry),
