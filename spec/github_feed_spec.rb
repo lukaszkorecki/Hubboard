@@ -81,8 +81,8 @@ describe "Github Module" do
         it "get url from an attribute" do
           @e[:link].should == 'http://example.com/001'
         end
-        it 'should unescape html entities' do
-          @e[:content].should == "<p>some HTML content</p>"
+        it 'should not unescape html entities' do
+          @e[:content].should == "&lt;p&gt;some HTML content&lt;/p&gt;"
         end
 
       end
