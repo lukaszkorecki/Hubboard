@@ -11,7 +11,8 @@ class HEventPanel < EventPanel
   private
   def format_content content
     # FIXME suboptimal
-    content.lines.to_a[1..-2].reject { | line | line.chomp.strip.empty? == true }.map do | line|
+
+    content.lines.to_a.reject{ | l | l =~ /div/ }.reject { | line | line.chomp.strip.empty? == true }.map do | line|
       line.gsub('&lt;','<').gsub('&gt;','>')
     end.join ""
   end
