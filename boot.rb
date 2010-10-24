@@ -17,13 +17,14 @@ require 'yaml'
 require 'lib/default_browser'
 require 'lib/image_cache'
 require 'lib/github'
+require 'lib/pretty_date'
 
 # MVC
 # loads frames (views) and controllers automatically
 # technicaly controllers and views are the same
 # here's an explanation:
 # - view -> a class generated from .xrc file by xrcise tool, SHOULDN'T BE CHANGED
-# - controller -> the same class, but opened in a different class with 
+# - controller -> the same class, but opened in a different class with
 #                 all the extra code added (events, getting data from models, etc)
 Dir["views/*.rb"].each do |frame_file|
   require frame_file.sub(".rb","")
