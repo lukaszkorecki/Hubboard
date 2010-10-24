@@ -51,5 +51,3 @@ module Github
   end
 
 end
-
-

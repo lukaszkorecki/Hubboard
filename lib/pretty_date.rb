@@ -34,8 +34,24 @@ module PrettyDate
       when 172001..518400 then return ((a+800)/(60*60*24)).to_i.to_s+' days ago'
       when 518400..1036800 then return 'a week ago'
     end
-    return ((a+180000)/(60*60*24*7)).to_i.to_s+' weeks ago'
+    weeks = ((a+180000)/(60*60*24*7)).to_i #.to_s+' weeks ago'
+    puts weeks
+    case weeks
+    when 2..52
+      "#{weeks} weeks ago"
+    when 52
+      "1 year ago"
+    else
+      "#{"%.1f" % (weeks.to_f / 52)} years ago"
+    end
   end
 end
 
 DateTime.send :include,  PrettyDate
+Time.send :include,  PrettyDate
+class Time
+  # HAXX
+  def to_gm_time
+    self.to_i
+  end
+end

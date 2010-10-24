@@ -29,9 +29,13 @@ class HMainFrame < MainFrame
   end
 
   def show_user_details
-    @user_name.label = @gh_user.name # (#{@gh_user.login})"
+    #@user_name.label = @gh_user.name # (#{@gh_user.login})"
     @user_avatar.bitmap = url_to_bitmap @gh_user.avatar
-    @details_html.page = HtmlTemplates::User.to_html @gh_user
+    begin
+      @details_html.page = HtmlTemplates::User.to_html @gh_user
+    rescue => e
+      puts e.to_yaml
+    end
   end
   def show_dashboard
     @entries.each do |element|
