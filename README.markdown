@@ -13,3 +13,7 @@ Want to get notified about it with you favorite desktop notification tool?
 ## Use hubboard!
 
 ![very early screenshot](http://img.skitch.com/20101024-dwnr2dfgjea6xk7484e81ntuyn.jpg)
+
+## Credits
+
+[Fugue Icon Set](http://p.yusukekamiyamane.com/) by [Yusuke Kamiyamane](http://p.yusukekamiyamane.com/about/)

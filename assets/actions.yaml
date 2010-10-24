@@ -1,0 +1,25 @@
+wiki:
+  edited: 'document--plus.png'
+repo:
+  pushed: 'block--arrow.png'
+  created: 'block--plus.png'
+  applied: 'block--pencil.png'
+  forked: 'cutlery-fork.png'
+  created_tag: 'tag--plus.png'
+  created_branch: 'arrow-branch-090.png'
+  commented: 'balloon-white.png'
+  added_user: 'user-medical.png'
+pull_request:
+  merged: 'bandaid--arrow.png'
+  opened: 'bandaid--plus.png'
+  closed: 'bandaid--pencil.png'
+issue:
+  opened: 'ticket--plus.png'
+  closed: 'ticket--pencil.png'
+
+gist:
+  created: 'document--plus.png'
+  updated: 'document--pencil.png'
+users:
+  started_following: 'user--plus.png'
+  started_watching: 'binocular--plus.png'
