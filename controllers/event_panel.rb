@@ -21,4 +21,5 @@ private
     date = DateTime.parse(date_a, true)
     date.to_pretty
   end
+
 end

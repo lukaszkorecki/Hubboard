@@ -1,4 +1,5 @@
 # Taken from: http://my.safaribooksonline.com/0596523696?portal=oreilly
+require 'date'
 class Date
   def to_gm_time
     to_time(new_offset, :gm)
@@ -47,11 +48,13 @@ module PrettyDate
   end
 end
 
-DateTime.send :include,  PrettyDate
-Time.send :include,  PrettyDate
 class Time
   # HAXX
   def to_gm_time
     self.to_i
   end
 end
+
+
+DateTime.send :include,  PrettyDate
+Time.send :include,  PrettyDate
