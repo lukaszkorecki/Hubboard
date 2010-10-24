@@ -1,7 +1,7 @@
 require 'boot'
 
 class Application < Wx::App
-  attr_reader :gh_login, :gh_token, :image_cache
+  attr_reader :gh_login, :gh_token, :image_cache, :icons
   def on_init
     # gh vars
     @gh_login, @gh_token = Github.git_config
@@ -26,6 +26,14 @@ class Application < Wx::App
     @image_cache = ImageCache.new('hubboard')
     @image_cache.setup ['avatars']
     @image_cache.rebuild
+
+    @event_icons = Icons.new
+  end
+
+  def url_to_bitmap img_url
+    c_img = @image_cache.do_it img_url, :extension => "png", :subdir => 'avatars'
+    img = Wx::Image.new(c_img)
+    Wx::Bitmap.from_image(img)
   end
 end
 
@@ -34,5 +42,3 @@ end
 App = Application.new
 
 App.main_loop
-
-

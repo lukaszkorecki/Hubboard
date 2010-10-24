@@ -18,6 +18,7 @@ require 'lib/default_browser'
 require 'lib/image_cache'
 require 'lib/github'
 require 'lib/pretty_date'
+require 'lib/icon_manager'
 
 # MVC
 # loads frames (views) and controllers automatically

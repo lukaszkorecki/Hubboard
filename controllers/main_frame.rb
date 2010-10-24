@@ -30,7 +30,7 @@ class HMainFrame < MainFrame
 
   def show_user_details
     #@user_name.label = @gh_user.name # (#{@gh_user.login})"
-    @user_avatar.bitmap = url_to_bitmap @gh_user.avatar
+    @user_avatar.bitmap = App.url_to_bitmap @gh_user.avatar
     begin
       @details_html.page = HtmlTemplates::User.to_html @gh_user
     rescue => e
@@ -45,9 +45,4 @@ class HMainFrame < MainFrame
     end
   end
 private
-  def url_to_bitmap img_url
-    c_img = App.image_cache.do_it img_url, :extension => "png", :subdir => 'avatars'
-    img = Wx::Image.new(c_img)
-    Wx::Bitmap.from_image(img)
-  end
 end
