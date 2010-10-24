@@ -4,11 +4,11 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Oct 24 12:36:10 +0100 2010
+# Generated at: Sun Oct 24 13:45:51 +0100 2010
 
 class MainFrame < Wx::Frame
 	
-	attr_reader :user_panel, :user_name, :user_avatar, :details_html,
+	attr_reader :user_panel, :user_avatar, :details_html,
               :timeline_scroller
 	
 	def initialize(parent = nil)
@@ -31,7 +31,6 @@ class MainFrame < Wx::Frame
 		end
 		
 		@user_panel = finder.call("user_panel")
-		@user_name = finder.call("user_name")
 		@user_avatar = finder.call("user_avatar")
 		@details_html = finder.call("details_html")
 		@timeline_scroller = finder.call("timeline_scroller")
@@ -48,13 +47,12 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Oct 24 12:36:10 +0100 2010
+# Generated at: Sun Oct 24 13:45:51 +0100 2010
 
 class EventPanel < Wx::Panel
 	
-	attr_reader :title_label, :user_avatar, :published_label,
-              :event_icon, :ghlink_button, :contents_html,
-              :m_staticline1
+	attr_reader :title_label, :user_avatar, :event_icon, :ghlink_button,
+              :contents_html, :published_label, :m_staticline1
 	
 	def initialize(parent = nil)
 		super()
@@ -77,10 +75,10 @@ class EventPanel < Wx::Panel
 		
 		@title_label = finder.call("title_label")
 		@user_avatar = finder.call("user_avatar")
-		@published_label = finder.call("published_label")
 		@event_icon = finder.call("event_icon")
 		@ghlink_button = finder.call("ghlink_button")
 		@contents_html = finder.call("contents_html")
+		@published_label = finder.call("published_label")
 		@m_staticline1 = finder.call("m_staticline1")
 		if self.class.method_defined? "on_init"
 			self.on_init()
