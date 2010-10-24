@@ -6,21 +6,16 @@ module HtmlTemplates
   require 'erb'
   class User
     def self.to_html user
-      @t = ERB.new "<div>
-      <p>
-        <a href='http://github.com/<%= @login %>'><%= @login %></a>
-        <br>
+      @t = ERB.new " <b> <a href='http://github.com/<%= @login %>'><%= @name%></a> </b>
+        <br/>
         <a href='<%= @blog %>'><%= @blog %></a>
         <br>
         Member since: <%= @created_at %>
-      </p>
-      <p>
-        <ul>
-          <li>Followers: <%= @followers_count %></li>
-          <li>Repos: <%= @public_repo_count %></li>
-          <li>Gists: <%= @public_gist_count %></li>
-        </ul>
-      </p>"
+        <br/>
+          <span>Followers: <%= @followers_count %></span>
+          <span>Repos: <%= @public_repo_count %></span>
+          <span>Gists: <%= @public_gist_count %></span>
+      "
       @t.result user.get_binding
     end
   end
