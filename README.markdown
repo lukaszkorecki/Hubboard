@@ -12,4 +12,4 @@ Want to get notified about it with you favorite desktop notification tool?
 
 ## Use hubboard!
 
-![very early screenshot](http://img.skitch.com/20101020-pjfaffyyt6wacnpspu9fhu3dst.jpg)
+![very early screenshot](http://img.skitch.com/20101024-dwnr2dfgjea6xk7484e81ntuyn.jpg)
