@@ -4,45 +4,52 @@ class HMainFrame < MainFrame
     @timeline_scroller.sizer.layout
     @timeline_scroller.set_scrollbars(20,20, 20,20,0,0,true)
 
-    get_user_details { show_user_details }
-    get_gh_dashboard { show_dashboard }
+    get_user_details { |details| show_user_details details }
+    get_gh_dashboard { |entries|  show_dashboard entries }
   end
 
   def get_gh_dashboard
     Thread.new do
-      @entries = Feed.new { Github.get_feed App.gh_login, App.gh_token }.parse.entries
-      if @entries
-        yield
-      end
+      entries = Feed.new { Github.get_feed App.gh_login, App.gh_token }.parse.entries
+      puts "get_gh_dashboard: #{entries}"
+      yield entries
     end
   end
   def get_user_details
     Thread.new do
-      @gh_user = User.new(:login => App.gh_login, :token => App.gh_token)
-      if @gh_user
-        yield
-      else
-        # TODO add message method
-        puts 'you`re offline!'
-      end
+      gh_user = User.new(:login => App.gh_login, :token => App.gh_token)
+      puts "get_user_details: #{gh_user}"
+      yield gh_user
     end
   end
 
-  def show_user_details
-    #@user_name.label = @gh_user.name # (#{@gh_user.login})"
-    @user_avatar.bitmap = App.url_to_bitmap @gh_user.avatar
+  def show_user_details gh_user
+    return missing_gh_cred unless gh_user
+    @user_avatar.bitmap = App.url_to_bitmap gh_user.avatar
     begin
-      @details_html.page = HtmlTemplates::User.to_html @gh_user
+      @details_html.page = HtmlTemplates::User.to_html gh_user
     rescue => e
       puts e.to_yaml
     end
   end
-  def show_dashboard
-    @entries.each do |element|
+  def show_dashboard entries
+    return missing_gh_cred unless entries
+    entries.each do |element|
       ev = HEventPanel.new @timeline_scroller
       ev.body = element
       @timeline_scroller.sizer.add ev, 1, Wx::GROW|Wx::ALL
     end
   end
-private
+  def message(title, text)
+    puts "text: #{text}"
+    puts "title: #{title}"
+    m = Wx::MessageDialog.new(self, text, title, Wx::OK | Wx::ICON_INFORMATION)
+    m.show_modal()
+    true
+  end
+
+  def missing_gh_cred
+    STDOUT << "LOL"
+    message "Your GitHub settings are missing or are wrong!","Run `git config -e` and confirm that GitHub setttings are present and correct.\nHubboard requires github.user and github.token entries to be present and valid."
+  end
 end

@@ -1,9 +1,9 @@
 require 'boot'
 
 class Application < Wx::App
-  attr_reader :gh_login, :gh_token, :image_cache, :icons
+  attr_reader :gh_login, :gh_token, :image_cache, :event_icons
   def on_init
-    # gh vars
+    # GitHub vars
     @gh_login, @gh_token = Github.git_config
 
     # Emulate the thread scheduler

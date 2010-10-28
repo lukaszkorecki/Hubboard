@@ -8,21 +8,25 @@ module Github
   FEED_URL = 'https://github.com/{username}.private.atom?token={token}'
 
   def self.http_get url
-    SimpleHttp.get URI.parse url
+    begin
+      res = SimpleHttp.get URI.parse url
+    rescue => e
+      res = false
+    end
+    res
   end
   def self.get_feed username, token
     t_url = FEED_URL.sub("{username}", username).sub("{token}", token)
-    http_get t_url
+    begin
+      resp = http_get t_url
+    rescue => e
+      return false
+    end
+    resp
   end
 
   def self.get_api path, auth=nil
-    # TODO handle basic auth
-    begin
-      http_get API_URL+path
-    rescue SocketError
-      return false
-    end
-
+    http_get API_URL+path
   end
 
   def self.method_missing name, *args
@@ -38,7 +42,7 @@ module Github
       end
     else
       super(name, args)
-      
+
     end
   end
 

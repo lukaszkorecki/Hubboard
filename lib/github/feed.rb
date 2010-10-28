@@ -31,6 +31,7 @@ module Github
     # which are stores in memory cache (@entries)
     # order is preserved by @id_list array
     def parse(is_update=false)
+      return (@entries=false) unless @feed_content
       doc = REXML::Document.new(@feed_content)
       entries = [].tap do | collection |
         doc.root.elements.select { |e| e.name =~ /entry/ }.each do | el |

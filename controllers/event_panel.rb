@@ -8,6 +8,7 @@ class HEventPanel < EventPanel
     @contents_html.page = format_content(event[:content])
     @title_label.label =  event[:title]
     @published_label.label = fuzzy_date event[:published]
+    @event_icon.bitmap = Wx::Bitmap.from_image Wx::Image.new App.event_icon event[:title]
   end
 private
   def format_content content
