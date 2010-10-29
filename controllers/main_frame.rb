@@ -25,7 +25,7 @@ class HMainFrame < MainFrame
   end
 
   def show_user_details gh_user
-    return missing_gh_cred unless gh_user
+    return missing_gh_cred if gh_user.data.nil?
     @user_avatar.bitmap = App.url_to_bitmap gh_user.avatar
     begin
       @details_html.page = HtmlTemplates::User.to_html gh_user
@@ -50,7 +50,7 @@ class HMainFrame < MainFrame
   end
 
   def missing_gh_cred
-    STDOUT << "LOL"
-    message "Your GitHub settings are missing or are wrong!","Run `git config -e` and confirm that GitHub setttings are present and correct.\nHubboard requires github.user and github.token entries to be present and valid."
+    @message_seen = true
+    message "Your GitHub settings are missing or are wrong!","Run `git config -e` and confirm that GitHub setttings are present and correct.\nHubboard requires github.user and github.token entries to be present and valid." unless @message_seen
   end
 end

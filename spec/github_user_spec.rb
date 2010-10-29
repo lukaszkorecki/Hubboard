@@ -17,6 +17,10 @@ describe 'User' do
     end
     u.data.should == @user_data['user']
   end
+  it 'should return false if data couldnt be retreived' do
+    u  = User.new('loluser') { false }
+    u.data.should == nil
+  end
 
   it "should download the user data if block is not fiven" do
     Github.stub!(:get_user_info).and_return(@user_yaml)
