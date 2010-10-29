@@ -22,7 +22,7 @@ module Github
     def content feed=nil
       @feed_content = yield if block_given?
       @feed_content = feed unless feed.nil?
-
+      @feed_content
     end
 
 ## Feed Parsing Functions ##
@@ -31,7 +31,7 @@ module Github
     # which are stores in memory cache (@entries)
     # order is preserved by @id_list array
     def parse(is_update=false)
-      return (@entries=false) unless @feed_content
+      return nil unless @feed_content
       doc = REXML::Document.new(@feed_content)
       entries = [].tap do | collection |
         doc.root.elements.select { |e| e.name =~ /entry/ }.each do | el |

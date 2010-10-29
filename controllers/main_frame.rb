@@ -10,9 +10,10 @@ class HMainFrame < MainFrame
 
   def get_gh_dashboard
     Thread.new do
-      entries = Feed.new { Github.get_feed App.gh_login, App.gh_token }.parse.entries
-      puts "get_gh_dashboard: #{entries}"
-      yield entries
+      entries = Feed.new { Github.get_feed App.gh_login, App.gh_token }.entries
+      puts "get_gh_dashboard: #{entries.inspect}"
+
+      yield entries.empty? ? false : entries.parse
     end
   end
   def get_user_details

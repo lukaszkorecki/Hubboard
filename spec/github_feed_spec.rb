@@ -40,6 +40,9 @@ describe "Github Module" do
       @ghf.content @atom
       @ghf.feed_content.should == @atom
     end
+    it 'should return false if feed wasnt retreivedj' do
+      Github::Feed.new { false }.entries == false
+    end
 
     it "should not assign anythong to feed_content if block isn't passed" do
       @ghf.feed_content.should == nil
