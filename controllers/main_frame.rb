@@ -52,10 +52,7 @@ class HMainFrame < MainFrame
   end
 
   def missing_gh_cred
-    msg_t = "Your GitHub settings are missing or are wrong!"
-    msg_b = "Run `git config -e` and confirm that GitHub setttings are present and correct.\nHubboard requires github.user and github.token entries to be present and valid."
-    message  msg_t, msg_b unless @message_seen
-    @details_html.page = "<b>#{msg_t}</b><p>#{msg_b}</p>"
+    message  APP_INFO['messages']['gitconfig_missing']['title'], APP_INFO['messages']['gitconfig_missing']['content'] unless @message_seen
     @message_seen = true
   end
 end
