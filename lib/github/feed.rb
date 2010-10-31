@@ -12,8 +12,9 @@ module Github
   require 'rexml/document'
   class Feed
     attr_reader :entries, :feed_content, :id_list
-    def initialize
+    def initialize options=nil
       @feed_content = yield if block_given?
+      @feed_content =  Github.get_feed options[:login], options[:token]
       @id_list = []
       @entries = []
     end
@@ -32,7 +33,11 @@ module Github
     # order is preserved by @id_list array
     def parse(is_update=false)
       return nil unless @feed_content
+      begin
       doc = REXML::Document.new(@feed_content)
+      rescue => e
+        puts e.to_yaml
+      end
       entries = [].tap do | collection |
         doc.root.elements.select { |e| e.name =~ /entry/ }.each do | el |
           collection << el
