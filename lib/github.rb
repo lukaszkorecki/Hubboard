@@ -7,26 +7,31 @@ module Github
   API_URL = 'http://github.com/api/v2/yaml'
   FEED_URL = 'https://github.com/{username}.private.atom?token={token}'
 
-  def self.http_get url
-    begin
-      res = SimpleHttp.get URI.parse url
-    rescue => e
-      res = false
-    end
-    res
-  end
   def self.get_feed username, token
     t_url = FEED_URL.sub("{username}", username).sub("{token}", token)
+    uri = URI.parse t_url
     begin
-      resp = http_get t_url
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      response = http.request Net::HTTP::Get.new(uri.request_uri)
+      response_feed  = response.body
     rescue => e
-      return false
+      puts "GET FEED FAIL!", e.to_yaml
+      response_feed = false
     end
-    resp
+    return response_feed.to_s
   end
 
   def self.get_api path, auth=nil
-    http_get API_URL+path
+    url = API_URL+path
+    begin
+      r = Net::HTTP.get_response URI.parse url
+    rescue => e
+      puts "GET API FAIL!",  e.to_yaml
+      r = false
+    end
+    return r.body
   end
 
   def self.method_missing name, *args
