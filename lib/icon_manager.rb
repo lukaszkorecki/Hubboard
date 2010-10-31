@@ -7,7 +7,7 @@ class Icons
     @dir+'/'+@icons[category][action]
   end
 
-  def event_icon title
+  def from_title title
     case title
       # wiki
       when /edited.*wiki/
