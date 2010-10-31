@@ -30,7 +30,6 @@ class ImageCache
   def rebuild
     ["jpeg", "jpg", "png", "gif"].each do |type|
       p = "#{@root}#{@ds}**#{@ds}*.#{type}"
-      puts "Cache: #{p}"
       Dir[p].each do |path|
         @cached_list[path.split(@ds).last] ||= path
       end
@@ -45,7 +44,6 @@ class ImageCache
   def do_it  url, config
     subdir = config[:subdir] if config.key? :subdir
     extension = config[:extension] if config.key? :extension
-    puts "Caching: #{url}"
     file_name = url.split("/").last.gsub(/\W/,'')
     path = [@root, @ds]
     path << "#{subdir}#{@ds}" if subdir

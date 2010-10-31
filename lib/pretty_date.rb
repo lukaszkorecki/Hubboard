@@ -36,7 +36,6 @@ module PrettyDate
       when 518400..1036800 then return 'a week ago'
     end
     weeks = ((a+180000)/(60*60*24*7)).to_i #.to_s+' weeks ago'
-    puts weeks
     case weeks
     when 2..52
       "#{weeks} weeks ago"
