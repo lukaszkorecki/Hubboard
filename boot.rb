@@ -6,12 +6,13 @@ Dir["vendor/**/lib"].each do |lib_path|
 end
 
 # load vendor libs
-require 'json'
-require 'simple_http'
 require 'wx'
 
 # stuff
 require 'yaml'
+require 'net/http'
+require 'net/https'
+require 'cgi'
 
 # application classes
 require 'lib/default_browser'
