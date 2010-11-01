@@ -38,4 +38,4 @@ Dir["models/*.rb"].each do |model_file|
   require model_file.sub(".rb","")
 end
 
-APP_INFO = YAML::load_file('app.yml')
+APP_CONST = YAML::load_file('app.yml')

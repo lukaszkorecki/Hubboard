@@ -47,7 +47,7 @@ class HMainFrame < MainFrame
   end
 
   def missing_gh_cred
-    message  APP_INFO['messages']['gitconfig_missing']['title'], APP_INFO['messages']['gitconfig_missing']['content'] unless @message_seen
+    message  APP_CONST['messages']['gitconfig_missing']['title'], APP_CONST['messages']['gitconfig_missing']['content'] unless @message_seen
     @message_seen = true
   end
 end
