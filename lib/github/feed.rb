@@ -12,9 +12,9 @@ module Github
   require 'rexml/document'
   class Feed
     attr_reader :entries, :feed_content, :id_list
-    def initialize options=nil
+    def initialize options={}
       @feed_content = yield if block_given?
-      @feed_content =  Github.get_feed options[:login], options[:token]
+      @feed_content =  Github.get_feed options[:login], options[:token]if @feed_content.nil?
       @id_list = []
       @entries = []
     end

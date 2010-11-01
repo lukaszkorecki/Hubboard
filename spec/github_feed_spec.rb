@@ -3,8 +3,6 @@ require File.dirname(__FILE__)+"/../lib/github/feed"
 describe "Github Module" do
   describe "Feed" do
     before :each do
-      @ghf = Github::Feed.new
-
       @atom ||= File.new(File.dirname(__FILE__)+'/fixtures/test.atom','r').read
       @atom_update ||= File.new(File.dirname(__FILE__)+'/fixtures/test_update.atom','r').read
 
@@ -19,15 +17,16 @@ describe "Github Module" do
           <uri>http://example.com</uri>
         </author>
       XML
+
       @rxml ||= REXML::Document.new(xml)
+
+      Github.stub!(:get_feed).and_return @atom
+
+      @ghf = Github::Feed.new
     end
-    it "should assign file contents to @entries" do
-      r = Github::Feed.new do
-        @atom
-      end
-      r.feed_content.should == @atom
-      @ghf.content { @atom }
-      @ghf.feed_content.should == @atom
+    it "should assign file contents to feed content by default" do
+      ghf = Github::Feed.new
+      ghf.feed_content.should == @atom
     end
     it "should assign feed content if passed as a block" do
       @ghf.content do
@@ -44,8 +43,9 @@ describe "Github Module" do
       Github::Feed.new { false }.entries == false
     end
 
-    it "should not assign anythong to feed_content if block isn't passed" do
-      @ghf.feed_content.should == nil
+    it "should assign feed content via block" do
+      ghf = Github::Feed.new { @atom }
+      ghf.feed_content.should == @atom
     end
     it "should get data from an xml tag" do
       @ghf.send(:get_data_from_element, @rxml.root, 'name' ).strip.should == 'yo'
