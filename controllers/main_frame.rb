@@ -35,10 +35,12 @@ class HMainFrame < MainFrame
         ev = HEventPanel.new @timeline_scroller
         ev.body = element
         @timeline_scroller.sizer.add ev, 1, Wx::GROW|Wx::ALL
+        @timeline_scroller.layout
       rescue => e
         STDOUT << e.to_yaml
       end
     end
+    @timeline_scroller.layout
   end
   def message(title, text)
     m = Wx::MessageDialog.new(self, text, title, Wx::OK | Wx::ICON_INFORMATION)
