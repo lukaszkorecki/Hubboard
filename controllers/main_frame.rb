@@ -2,7 +2,7 @@ class HMainFrame < MainFrame
   include Github
   def on_init
     @timeline_scroller.sizer.layout
-    @timeline_scroller.set_scrollbars(20,20, 20,20,0,0,true)
+    @timeline_scroller.set_scrollbars(5,5, 5,5,0,0,true)
 
     get_user_details { |details| show_user_details details }
     get_gh_dashboard { |entries|  show_dashboard entries }
@@ -41,6 +41,7 @@ class HMainFrame < MainFrame
       end
     end
     @timeline_scroller.layout
+    @timeline_scroller.refresh
   end
   def message(title, text)
     m = Wx::MessageDialog.new(self, text, title, Wx::OK | Wx::ICON_INFORMATION)
