@@ -4,12 +4,14 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Oct 24 13:45:51 +0100 2010
+# Generated at: Thu Nov 04 00:00:58 +0000 2010
 
 class MainFrame < Wx::Frame
 	
-	attr_reader :user_panel, :user_avatar, :details_html,
-              :timeline_scroller
+	attr_reader :main_toolbar, :refresh_tool, :gist_new_tool,
+              :gist_browser_tool, :repo_new_tool, :repo_browser_tool,
+              :user_tool, :user_panel, :user_avatar, :details_html,
+              :timeline_scroller, :status_bar
 	
 	def initialize(parent = nil)
 		super()
@@ -30,10 +32,18 @@ class MainFrame < Wx::Frame
 			end
 		end
 		
+		@main_toolbar = finder.call("main_toolbar")
+		@refresh_tool = finder.call("refresh_tool")
+		@gist_new_tool = finder.call("gist_new_tool")
+		@gist_browser_tool = finder.call("gist_browser_tool")
+		@repo_new_tool = finder.call("repo_new_tool")
+		@repo_browser_tool = finder.call("repo_browser_tool")
+		@user_tool = finder.call("user_tool")
 		@user_panel = finder.call("user_panel")
 		@user_avatar = finder.call("user_avatar")
 		@details_html = finder.call("details_html")
 		@timeline_scroller = finder.call("timeline_scroller")
+		@status_bar = finder.call("status_bar")
 		if self.class.method_defined? "on_init"
 			self.on_init()
 		end
@@ -47,12 +57,12 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Oct 24 13:45:51 +0100 2010
+# Generated at: Thu Nov 04 00:00:58 +0000 2010
 
 class EventPanel < Wx::Panel
 	
-	attr_reader :title_label, :user_avatar, :event_icon, :ghlink_button,
-              :contents_html, :published_label, :m_staticline1
+	attr_reader :event_icon, :title_label, :user_avatar, :contents_html,
+              :ghlink_button, :published_label, :m_staticline1
 	
 	def initialize(parent = nil)
 		super()
@@ -73,11 +83,11 @@ class EventPanel < Wx::Panel
 			end
 		end
 		
+		@event_icon = finder.call("event_icon")
 		@title_label = finder.call("title_label")
 		@user_avatar = finder.call("user_avatar")
-		@event_icon = finder.call("event_icon")
-		@ghlink_button = finder.call("ghlink_button")
 		@contents_html = finder.call("contents_html")
+		@ghlink_button = finder.call("ghlink_button")
 		@published_label = finder.call("published_label")
 		@m_staticline1 = finder.call("m_staticline1")
 		if self.class.method_defined? "on_init"
