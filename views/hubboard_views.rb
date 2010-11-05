@@ -4,13 +4,13 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Thu Nov 04 23:21:08 +0000 2010
+# Generated at: Fri Nov 05 00:20:11 +0000 2010
 
 class MainFrame < Wx::Frame
 	
 	attr_reader :main_toolbar, :refresh_tool, :gist_new_tool,
               :gist_browser_tool, :user_tool, :user_panel,
-              :user_avatar, :details_html, :timeline_scroller,
+              :user_avatar, :details_html, :list_panel, :event_list,
               :status_bar
 	
 	def initialize(parent = nil)
@@ -40,7 +40,8 @@ class MainFrame < Wx::Frame
 		@user_panel = finder.call("user_panel")
 		@user_avatar = finder.call("user_avatar")
 		@details_html = finder.call("details_html")
-		@timeline_scroller = finder.call("timeline_scroller")
+		@list_panel = finder.call("list_panel")
+		@event_list = finder.call("event_list")
 		@status_bar = finder.call("status_bar")
 		if self.class.method_defined? "on_init"
 			self.on_init()
@@ -55,7 +56,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Thu Nov 04 23:21:08 +0000 2010
+# Generated at: Fri Nov 05 00:20:11 +0000 2010
 
 class EventPanel < Wx::Panel
 	
@@ -101,7 +102,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Thu Nov 04 23:21:08 +0000 2010
+# Generated at: Fri Nov 05 00:20:11 +0000 2010
 
 class NewGistFrame < Wx::Frame
 	
