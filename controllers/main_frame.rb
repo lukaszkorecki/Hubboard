@@ -1,7 +1,7 @@
 class HMainFrame < MainFrame
   include Github
   def on_init
-
+    @entries = []
     get_user_details { |details| show_user_details details }
     get_gh_dashboard { |entries|  show_dashboard entries }
 
@@ -40,7 +40,7 @@ class HMainFrame < MainFrame
   end
   def show_dashboard entries
     return missing_gh_cred unless entries
-    @entries = entries
+    @entries = entries + @entries
     ti = entries.map { |el| el[:title] }
     @title_list.insert_items ti, 0
   end
