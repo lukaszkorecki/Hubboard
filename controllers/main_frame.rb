@@ -17,6 +17,8 @@ class HMainFrame < MainFrame
       show_user_details details
     end
     @current_url = @entries[ev.index][:link]
+    ic = App.event_icons.from_title(@entries[ev.index][:title])
+    @event_icon.bitmap = Wx::Bitmap.from_image(Wx::Image.new ic)
   end
   def get_gh_dashboard
     Thread.new do

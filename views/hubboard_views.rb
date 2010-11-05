@@ -4,15 +4,15 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Fri Nov 05 23:30:48 +0000 2010
+# Generated at: Fri Nov 05 23:49:09 +0000 2010
 
 class MainFrame < Wx::Frame
 	
 	attr_reader :main_toolbar, :refresh_tool, :gist_new_tool,
               :gist_browser_tool, :m_splitter1, :m_panel2,
-              :title_list, :m_panel3, :title_label, :event_content,
-              :published_label, :visit_button, :details_html,
-              :user_avatar, :status_bar
+              :title_list, :m_panel3, :event_icon, :title_label,
+              :event_content, :published_label, :visit_button,
+              :details_html, :user_avatar, :status_bar
 	
 	def initialize(parent = nil)
 		super()
@@ -41,6 +41,7 @@ class MainFrame < Wx::Frame
 		@m_panel2 = finder.call("m_panel2")
 		@title_list = finder.call("title_list")
 		@m_panel3 = finder.call("m_panel3")
+		@event_icon = finder.call("event_icon")
 		@title_label = finder.call("title_label")
 		@event_content = finder.call("event_content")
 		@published_label = finder.call("published_label")
@@ -61,7 +62,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Fri Nov 05 23:30:48 +0000 2010
+# Generated at: Fri Nov 05 23:49:09 +0000 2010
 
 class EventPanel < Wx::Panel
 	
@@ -107,7 +108,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Fri Nov 05 23:30:48 +0000 2010
+# Generated at: Fri Nov 05 23:49:09 +0000 2010
 
 class NewGistFrame < Wx::Frame
 	
