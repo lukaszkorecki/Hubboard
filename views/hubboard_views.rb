@@ -4,14 +4,15 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Fri Nov 05 00:20:11 +0000 2010
+# Generated at: Fri Nov 05 23:30:48 +0000 2010
 
 class MainFrame < Wx::Frame
 	
 	attr_reader :main_toolbar, :refresh_tool, :gist_new_tool,
-              :gist_browser_tool, :user_tool, :user_panel,
-              :user_avatar, :details_html, :list_panel, :event_list,
-              :status_bar
+              :gist_browser_tool, :m_splitter1, :m_panel2,
+              :title_list, :m_panel3, :title_label, :event_content,
+              :published_label, :visit_button, :details_html,
+              :user_avatar, :status_bar
 	
 	def initialize(parent = nil)
 		super()
@@ -36,12 +37,16 @@ class MainFrame < Wx::Frame
 		@refresh_tool = finder.call("refresh_tool")
 		@gist_new_tool = finder.call("gist_new_tool")
 		@gist_browser_tool = finder.call("gist_browser_tool")
-		@user_tool = finder.call("user_tool")
-		@user_panel = finder.call("user_panel")
-		@user_avatar = finder.call("user_avatar")
+		@m_splitter1 = finder.call("m_splitter1")
+		@m_panel2 = finder.call("m_panel2")
+		@title_list = finder.call("title_list")
+		@m_panel3 = finder.call("m_panel3")
+		@title_label = finder.call("title_label")
+		@event_content = finder.call("event_content")
+		@published_label = finder.call("published_label")
+		@visit_button = finder.call("visit_button")
 		@details_html = finder.call("details_html")
-		@list_panel = finder.call("list_panel")
-		@event_list = finder.call("event_list")
+		@user_avatar = finder.call("user_avatar")
 		@status_bar = finder.call("status_bar")
 		if self.class.method_defined? "on_init"
 			self.on_init()
@@ -56,7 +61,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Fri Nov 05 00:20:11 +0000 2010
+# Generated at: Fri Nov 05 23:30:48 +0000 2010
 
 class EventPanel < Wx::Panel
 	
@@ -102,7 +107,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Fri Nov 05 00:20:11 +0000 2010
+# Generated at: Fri Nov 05 23:30:48 +0000 2010
 
 class NewGistFrame < Wx::Frame
 	
