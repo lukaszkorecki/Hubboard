@@ -31,8 +31,13 @@ class Application < Wx::App
   end
 
   def url_to_bitmap img_url
-    c_img = @image_cache.do_it img_url, :extension => "png", :subdir => 'avatars'
-    img = Wx::Image.new(c_img)
+    c_img = @image_cache.do_it img_url, :subdir => 'avatars' # , :extension => "jpg"
+
+    # get correct image handler, based on `file` command (emulating mime-types)
+    type = `file #{c_img}`.to_s.split(" ")[1]
+    handler = Wx.const_get "BITMAP_TYPE_#{type}"
+
+    img = Wx::Image.new(c_img, handler)
     Wx::Bitmap.from_image(img)
   end
 end

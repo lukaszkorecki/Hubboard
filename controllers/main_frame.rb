@@ -27,7 +27,8 @@ class HMainFrame < MainFrame
     end
   end
   def get_user_details name = nil
-    user = name || {:login => App.gh_login, :token => App.gh_token}
+    return 'stop' if @user == name
+    @user = name || {:login => App.gh_login, :token => App.gh_token}
     Thread.new do
       gh_user = User.new(user)
       yield gh_user
@@ -36,8 +37,11 @@ class HMainFrame < MainFrame
 
   def show_user_details gh_user
     return missing_gh_cred if gh_user.data.nil?
-
-    @user_avatar.bitmap = App.url_to_bitmap gh_user.avatar
+    begin
+      @user_avatar.bitmap = App.url_to_bitmap gh_user.avatar
+    rescue => e
+      STDOUT << "no handler? #{e.to_yaml}"
+    end
     @details_html.page = HtmlTemplates::User.to_html gh_user
   end
   def show_dashboard entries
