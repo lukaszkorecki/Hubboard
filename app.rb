@@ -20,7 +20,7 @@ class Application < Wx::App
     # lets show some stuff, eh?
     @main_frame = HMainFrame.new
 
-    @main_frame.size = Wx::Size.new  400, 575
+    @main_frame.size = Wx::Size.new 580, 425
     @main_frame.show
 
     @image_cache = ImageCache.new('hubboard')
