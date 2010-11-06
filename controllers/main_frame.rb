@@ -2,6 +2,7 @@ class HMainFrame < MainFrame
   include Github
   def on_init
     @entries = []
+    @user = ''
     get_user_details { |details| show_user_details details }
     get_gh_dashboard { |entries|  show_dashboard entries }
 
@@ -27,21 +28,17 @@ class HMainFrame < MainFrame
     end
   end
   def get_user_details name = nil
-    return 'stop' if @user == name
+    return if @user == name
     @user = name || {:login => App.gh_login, :token => App.gh_token}
     Thread.new do
-      gh_user = User.new(user)
+      gh_user = User.new(@user)
       yield gh_user
     end
   end
 
   def show_user_details gh_user
     return missing_gh_cred if gh_user.data.nil?
-    begin
-      @user_avatar.bitmap = App.url_to_bitmap gh_user.avatar
-    rescue => e
-      STDOUT << "no handler? #{e.to_yaml}"
-    end
+    @user_avatar.bitmap = App.url_to_bitmap gh_user.avatar
     @details_html.page = HtmlTemplates::User.to_html gh_user
   end
   def show_dashboard entries
