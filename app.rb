@@ -30,6 +30,12 @@ class Application < Wx::App
     @event_icons = Icons.new
   end
 
+  def show_prefs
+    @preferences ||= HPreferencesFrame.new
+    @preferences.set_gh_settings @gh_login, @gh_token
+    @preferences.show
+  end
+
   def url_to_bitmap img_url
     c_img = @image_cache.do_it img_url, :subdir => 'avatars' # , :extension => "jpg"
 

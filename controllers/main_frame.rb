@@ -3,8 +3,6 @@ class HMainFrame < MainFrame
   def on_init
     @entries = []
     @user = ''
-    get_user_details { |details| show_user_details details }
-    get_gh_dashboard { |entries|  show_dashboard entries }
 
     evt_listbox(@title_list.get_id) { |ev| show_event_content ev }
 
@@ -12,6 +10,20 @@ class HMainFrame < MainFrame
 
     evt_html_link_clicked(@details_html.get_id) { |ev| handle_url(ev) }
     evt_html_link_clicked(@event_content.get_id) { |ev| handle_url(ev) }
+
+    # map toolbar click to events
+    # TODO refactor this once it's all
+    # settled
+    evt_tool(@preferences_tool) { App.show_prefs }
+
+    evt_tool(@refresh_tool) do
+      refresh_gh_dashboard do |entries|
+        show_event_content entries
+      end
+    end
+    # get dashboard and current user info
+    get_user_details { |details| show_user_details details }
+    get_gh_dashboard { |entries|  show_dashboard entries }
   end
 
   def handle_url event
