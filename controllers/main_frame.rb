@@ -7,9 +7,18 @@ class HMainFrame < MainFrame
     get_gh_dashboard { |entries|  show_dashboard entries }
 
     evt_listbox(@title_list.get_id) { |ev| show_event_content ev }
+
     evt_button(@visit_button.get_id) { Wx::launch_in_default_browser @current_url}
+
+    evt_html_link_clicked(@details_html.get_id) { |ev| handle_url(ev) }
+    evt_html_link_clicked(@event_content.get_id) { |ev| handle_url(ev) }
   end
 
+  def handle_url event
+    url = event.link_info.href
+    url = "http://github.com#{url}" unless url =~ /^http/
+    Wx::launch_in_default_browser url
+  end
   def show_event_content ev
     @event_content.page = format_content @entries[ev.index][:content]
     @published_label.label = fuzzy_date @entries[ev.index][:published]
@@ -41,6 +50,7 @@ class HMainFrame < MainFrame
     @user_avatar.bitmap = App.url_to_bitmap gh_user.avatar
     @details_html.page = HtmlTemplates::User.to_html gh_user
   end
+
   def show_dashboard entries
     return missing_gh_cred unless entries
     @entries = entries + @entries
