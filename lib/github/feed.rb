@@ -59,6 +59,8 @@ module Github
     end
 
     def parse_and_update
+      @feed_content = yield if block_given?
+      @feed_content =  Github.get_feed options[:login], options[:token]if @feed_content.nil?
       parse true
     end
 

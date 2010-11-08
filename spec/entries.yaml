@@ -1,0 +1,33 @@
+- :content:
+    lol lol lol
+  :published:
+    yesterday
+  :title:
+    lol title 1
+  :author:
+    :name:
+      lukaszkorecki
+  :link:
+    http://example.com
+- :content:
+    lol lol lol
+  :published:
+    yesterday
+  :title:
+    lol title 2
+  :author:
+    :name:
+      lukaszkorecki
+  :link:
+    http://example.com
+- :content:
+    lol lol lol
+  :published:
+    yesterday
+  :title:
+    lol title 3
+  :author:
+    :name:
+      lukaszkorecki
+  :link:
+    http://example.com

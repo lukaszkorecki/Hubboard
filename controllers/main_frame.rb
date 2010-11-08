@@ -12,6 +12,12 @@ class HMainFrame < MainFrame
 
     evt_html_link_clicked(@details_html.get_id) { |ev| handle_url(ev) }
     evt_html_link_clicked(@event_content.get_id) { |ev| handle_url(ev) }
+
+    evt_tool(@refresh_tool) do
+        update_gh_dashboard do |entries|
+          show_dashboard entries
+        end
+    end
   end
 
   def handle_url event
@@ -30,12 +36,22 @@ class HMainFrame < MainFrame
     ic = App.event_icons.from_title(@entries[ev.index][:title])
     @event_icon.bitmap = Wx::Bitmap.from_image(Wx::Image.new ic)
   end
+
   def get_gh_dashboard
     Thread.new do
-      entries = Feed.new(:login => App.gh_login, :token => App.gh_token).parse
+      @feed ||= Feed.new(:login => App.gh_login, :token => App.gh_token)
+      entries = @feed.parse
       yield entries.empty? ? false : entries
     end
   end
+
+  def update_gh_dashboard
+    Thread.new do
+      entries = @feed.parse_and_update
+      yield entries.empty? ? false : entries
+    end
+  end
+
   def get_user_details name = nil
     return if @user == name
     @user = name || {:login => App.gh_login, :token => App.gh_token}
@@ -53,9 +69,9 @@ class HMainFrame < MainFrame
 
   def show_dashboard entries
     return missing_gh_cred unless entries
-    @entries = entries + @entries
+    @entries = entries # + @entries
     ti = entries.map { |el| el[:title] }
-    @title_list.insert_items ti, 0
+    @title_list.set ti
   end
   def message(title, text)
     m = Wx::MessageDialog.new(self, text, title, Wx::OK | Wx::ICON_INFORMATION)
