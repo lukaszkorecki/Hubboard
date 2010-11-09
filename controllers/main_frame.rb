@@ -34,7 +34,12 @@ class HMainFrame < MainFrame
     end
     @current_url = @entries[ev.index][:link]
     ic = App.event_icons.from_title(@entries[ev.index][:title])
-    @event_icon.bitmap = Wx::Bitmap.from_image(Wx::Image.new ic)
+    STDOUT << ic
+    begin
+      @event_icon.bitmap = Wx::Bitmap.from_image(Wx::Image.new ic)
+    rescue => e
+      STDOUT << e.to_yaml
+    end
   end
 
   def get_gh_dashboard
