@@ -27,19 +27,24 @@ class HMainFrame < MainFrame
   end
   def show_event_content ev
     @event_content.page = format_content @entries[ev.index][:content]
+
     @published_label.label = fuzzy_date @entries[ev.index][:published]
+
     @title_label.label = @entries[ev.index][:title]
+
     get_user_details @entries[ev.index][:author][:name] do |details|
       show_user_details details
     end
+
     @current_url = @entries[ev.index][:link]
+
     ic = App.event_icons.from_title(@entries[ev.index][:title])
-    STDOUT << ic
     begin
       @event_icon.bitmap = Wx::Bitmap.from_image(Wx::Image.new ic)
     rescue => e
       STDOUT << e.to_yaml
     end
+
   end
 
   def get_gh_dashboard
@@ -73,11 +78,13 @@ class HMainFrame < MainFrame
   end
 
   def show_dashboard entries
+
     return missing_gh_cred unless entries
+
     @entries = entries # + @entries
-    ti = entries.map { |el| el[:title] }
-    @title_list.set ti
+    @title_list.set entries.map { |el| el[:title] }
   end
+
   def message(title, text)
     m = Wx::MessageDialog.new(self, text, title, Wx::OK | Wx::ICON_INFORMATION)
     m.show_modal()
