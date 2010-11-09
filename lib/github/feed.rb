@@ -11,12 +11,11 @@
 module Github
   require 'rexml/document'
   class Feed
-    attr_reader :entries, :feed_content, :id_list
+    attr_reader :entries, :feed_content
     def initialize options={}
       @options = options
       @feed_content = yield if block_given?
       @feed_content =  Github.get_feed @options[:login], @options[:token]if @feed_content.nil?
-      @id_list = []
       @entries = []
     end
 ## Interface functions ##
@@ -31,11 +30,11 @@ module Github
 
     # parses loaded feed contents into list of hashes
     # which are stores in memory cache (@entries)
-    # order is preserved by @id_list array
     def parse(is_update=false)
       return nil unless @feed_content
+
       begin
-      doc = REXML::Document.new(@feed_content)
+        doc = REXML::Document.new(@feed_content)
       rescue => e
         puts e.to_yaml
       end
@@ -44,19 +43,15 @@ module Github
           collection << el
         end
       end
-      if is_update
-        entries.reverse!
-        @entries.reverse!
-      end
-      entries.each do | entry |
-        _id = get_data_from_element(entry, 'id').gsub(/\D/, "")
-        unless @id_list.include? _id
-          @entries <<  parse_entry(_id, entry)
-          @id_list << _id
+
+      parsed = [].tap do | item |
+        entries.each do | entry |
+          _id = get_data_from_element(entry, 'id').gsub(/\D/, "")
+          item << parse_entry(_id, entry)
         end
       end
-      @entries.reverse! if is_update
-      @entries
+
+      @entries = ( parsed + @entries ).uniq
     end
 
     def parse_and_update
