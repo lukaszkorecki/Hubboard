@@ -47,6 +47,8 @@ class Icons
         get "users", 'started_watching'
       when /started following/
         get "users", 'started_following'
+      else
+        get 'repo', 'forked'
     end
   end
 end
