@@ -13,8 +13,9 @@ module Github
   class Feed
     attr_reader :entries, :feed_content, :id_list
     def initialize options={}
+      @options = options
       @feed_content = yield if block_given?
-      @feed_content =  Github.get_feed options[:login], options[:token]if @feed_content.nil?
+      @feed_content =  Github.get_feed @options[:login], @options[:token]if @feed_content.nil?
       @id_list = []
       @entries = []
     end
@@ -60,7 +61,7 @@ module Github
 
     def parse_and_update
       @feed_content = yield if block_given?
-      @feed_content =  Github.get_feed options[:login], options[:token]if @feed_content.nil?
+      @feed_content =  Github.get_feed @options[:login], @options[:token] unless block_given?
       parse true
     end
 
