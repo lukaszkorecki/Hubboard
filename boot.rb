@@ -14,6 +14,12 @@ require 'net/http'
 require 'net/https'
 require 'cgi'
 
+# setup desktop notifications
+case RUBY_PLATFORM
+  when /darwin/
+    require 'growl'
+    require 'lib/notifications/osx'
+end
 # application classes
 require 'lib/default_browser'
 require 'lib/image_cache'
@@ -39,3 +45,8 @@ Dir["models/*.rb"].each do |model_file|
 end
 
 APP_CONST = YAML::load_file('app.yml')
+
+Notification.new.message 'Hello!'
+n = Notification.new
+
+n.message 'lol pushed to wat', 'new commit at'
