@@ -27,7 +27,8 @@ require 'lib/github'
 require 'lib/pretty_date'
 require 'lib/icon_manager'
 
-# MVC
+# MVC - well, sort of :-)
+#
 # loads frames (views) and controllers automatically
 # technicaly controllers and views are the same
 # here's an explanation:
