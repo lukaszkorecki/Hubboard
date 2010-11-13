@@ -47,7 +47,3 @@ end
 
 APP_CONST = YAML::load_file('app.yml')
 
-Notification.new.message 'Hello!'
-n = Notification.new
-
-n.message 'lol pushed to wat', 'new commit at'
