@@ -4,7 +4,7 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Nov 07 13:53:12 +0000 2010
+# Generated at: Sat Nov 13 21:05:02 +0000 2010
 
 class MainFrame < Wx::Frame
 	
@@ -62,7 +62,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Nov 07 13:53:12 +0000 2010
+# Generated at: Sat Nov 13 21:05:02 +0000 2010
 
 class NewGistFrame < Wx::Frame
 	
