@@ -4,6 +4,7 @@ class Application < Wx::App
   attr_reader :gh_login, :gh_token, :image_cache, :event_icons
   def on_init
     # GitHub vars
+    notify "Hubboard", "Hello!"
     @gh_login, @gh_token = Github.git_config
 
     # Emulate the thread scheduler
@@ -28,6 +29,11 @@ class Application < Wx::App
     @image_cache.rebuild
 
     @event_icons = Icons.new
+  end
+
+  def notify title, message
+    @notif ||= Notification.new
+    @notif.message title, message
   end
 
   def url_to_bitmap img_url

@@ -81,14 +81,16 @@ class HMainFrame < MainFrame
 
     return missing_gh_cred unless entries
 
-    @entries = entries # + @entries
+    length_before = @entries.length
+    STDOUT << length_before
+    @entries = entries
     @title_list.set entries.map { |el| el[:title] }
+    entries[0..(@entries.length-length_before)].each { |el| App.notify el[:author][:name], el[:title] } unless length_before == 0 or (length_before == @entries.length)
+
   end
 
   def message(title, text)
-    m = Wx::MessageDialog.new(self, text, title, Wx::OK | Wx::ICON_INFORMATION)
-    m.show_modal()
-    true
+    App.notify title, text
   end
 
   def missing_gh_cred
