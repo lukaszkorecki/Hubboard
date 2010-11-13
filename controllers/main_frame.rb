@@ -1,11 +1,16 @@
 class HMainFrame < MainFrame
   include Github
   def on_init
+
+    @status_bar.push_status_text "Updated at: #{time_now}", 0
     @entries = []
     @user = ''
+
+    # get dashboard and current user info on startup
     get_user_details { |details| show_user_details details }
     get_gh_dashboard { |entries|  show_dashboard entries }
 
+    # setup events
     evt_listbox(@title_list.get_id) { |ev| show_event_content ev }
 
     evt_button(@visit_button.get_id) { Wx::launch_in_default_browser @current_url}
@@ -18,6 +23,15 @@ class HMainFrame < MainFrame
           show_dashboard entries
         end
     end
+
+    # setup timer
+    # make it check github dashboard every 15 minutes
+    evt_timer(31337) do
+      update_gh_dashboard do |entries|
+        show_dashboard entries
+      end
+    end
+    @timer = Wx::Timer.new self, 31337
   end
 
   def handle_url event
@@ -52,13 +66,17 @@ class HMainFrame < MainFrame
       @feed ||= Feed.new(:login => App.gh_login, :token => App.gh_token)
       entries = @feed.parse
       yield entries.empty? ? false : entries
+      # start the timer after initial dashboard update
+      @timer.start 900000 # 15 minutes
     end
+
   end
 
   def update_gh_dashboard
     Thread.new do
       entries = @feed.parse_and_update
       yield entries.empty? ? false : entries
+      @status_bar.push_status_text "Updated at: #{time_now}", 0
     end
   end
 
@@ -108,5 +126,8 @@ private
   def fuzzy_date(date_a)
     date = DateTime.parse(date_a, true)
     date.to_pretty
+  end
+  def time_now
+    "#{Time.now.hour}:#{Time.now.min}:#{Time.now.sec}"
   end
 end
