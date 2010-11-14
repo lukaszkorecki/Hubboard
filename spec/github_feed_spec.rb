@@ -67,7 +67,6 @@ describe "Github Module" do
       end
       it "should parse the the test feed and get two entries" do
         @entries.length.should == 2
-        @f.id_list.length.should == 2
       end
       it "should parse first entry and create a hash of proper structure" do
         [:gh_id, :content, :title, :link, :author, :published].each do | k |
@@ -104,8 +103,7 @@ describe "Github Module" do
       end
       describe "adding/updating entries" do
         before :each do
-          @f.content { @atom_update }
-          @f.parse_and_update
+          @f.parse_and_update { @atom_update }
         end
         it "should add new entries" do
           @f.entries.length.should == 4

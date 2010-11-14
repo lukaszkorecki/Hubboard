@@ -14,6 +14,12 @@ require 'net/http'
 require 'net/https'
 require 'cgi'
 
+# setup desktop notifications
+case RUBY_PLATFORM
+  when /darwin/
+    require 'growl'
+    require 'lib/notifications/osx'
+end
 # application classes
 require 'lib/default_browser'
 require 'lib/image_cache'
@@ -21,7 +27,8 @@ require 'lib/github'
 require 'lib/pretty_date'
 require 'lib/icon_manager'
 
-# MVC
+# MVC - well, sort of :-)
+#
 # loads frames (views) and controllers automatically
 # technicaly controllers and views are the same
 # here's an explanation:
@@ -39,3 +46,4 @@ Dir["models/*.rb"].each do |model_file|
 end
 
 APP_CONST = YAML::load_file('app.yml')
+

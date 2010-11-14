@@ -4,7 +4,7 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Nov 07 15:02:57 +0000 2010
+# Generated at: Sun Nov 14 11:50:46 +0000 2010
 
 class MainFrame < Wx::Frame
 	
@@ -63,7 +63,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Nov 07 15:02:57 +0000 2010
+# Generated at: Sun Nov 14 11:50:46 +0000 2010
 
 class NewGistFrame < Wx::Frame
 	
@@ -111,7 +111,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Nov 07 15:02:57 +0000 2010
+# Generated at: Sun Nov 14 11:50:46 +0000 2010
 
 class PrefrencesFrame < Wx::Frame
 	
