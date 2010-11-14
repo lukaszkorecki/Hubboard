@@ -26,6 +26,7 @@ require 'lib/image_cache'
 require 'lib/github'
 require 'lib/pretty_date'
 require 'lib/icon_manager'
+require 'lib/preferences'
 
 # MVC - well, sort of :-)
 #
