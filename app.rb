@@ -2,10 +2,19 @@ require 'boot'
 
 class Application < Wx::App
   attr_reader :gh_login, :gh_token, :image_cache, :event_icons
+
   def on_init
     # GitHub vars
     notify "Hubboard", "Hello!"
-    @gh_login, @gh_token = Github.git_config
+
+    # image cache for avatars
+    @image_cache = ImageCache.new('hubboard')
+    @image_cache.setup ['avatars']
+    @image_cache.rebuild
+
+    # event icons take fron /assets
+    @event_icons = Icons.new
+
 
     # Emulate the thread scheduler
     # it is important to remember
@@ -18,23 +27,45 @@ class Application < Wx::App
     t.start(100)
     evt_idle { Thread.pass }
 
+
+    # preferences
+    @prefs = Preferences.new
+    get_preferences
+
     # lets show some stuff, eh?
     @main_frame = HMainFrame.new
 
+
     @main_frame.size = Wx::Size.new 580, 425
     @main_frame.show
+  end
 
-    @image_cache = ImageCache.new('hubboard')
-    @image_cache.setup ['avatars']
-    @image_cache.rebuild
-
-    @event_icons = Icons.new
+  def get_preferences
+    if @prefs.gh_data
+      puts @prefs.gh_data.to_yaml
+      @gh_login = @prefs.gh_data[:username]
+      @gh_token = @prefs.gh_data[:token]
+    else
+      @preferences_frame ||= HPreferencesFrame.new
+      @preferences_frame.show
+    end
   end
 
   def show_prefs
-    @preferences ||= HPreferencesFrame.new
-    @preferences.set_gh_settings @gh_login, @gh_token
-    @preferences.show
+    @preferences_frame ||= HPreferencesFrame.new
+    @preferences_frame.show
+    @preferences_frame.set_gh_settings @gh_login, @gh_token
+  end
+
+  def store_prefs
+    username, token = @preferences_frame.gh_settings
+    if username and token
+      @prefs.store_gh_data username, token
+      @gh_login, @gh_token = username, token
+      @main_frame.start!
+    else
+      notify "wat?"
+    end
   end
 
   def notify title, message

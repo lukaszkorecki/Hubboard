@@ -2,13 +2,10 @@ class HMainFrame < MainFrame
   include Github
   def on_init
 
-    @status_bar.push_status_text "Updated at: #{time_now}", 0
     @entries = []
     @user = ''
 
-    # get dashboard and current user info on startup
-    get_user_details { |details| show_user_details details }
-    get_gh_dashboard { |entries|  show_dashboard entries }
+    start!
 
     # setup events
     evt_listbox(@title_list.get_id) { |ev| show_event_content ev }
@@ -46,6 +43,12 @@ class HMainFrame < MainFrame
       end
     end
     @timer = Wx::Timer.new self, 31337
+  end
+
+  def start!
+    # get dashboard and current user info on startup
+    get_user_details { |details| show_user_details details }
+    get_gh_dashboard { |entries|  show_dashboard entries }
   end
 
   def handle_url event
@@ -90,13 +93,13 @@ class HMainFrame < MainFrame
     Thread.new do
       entries = @feed.parse_and_update
       yield entries.empty? ? false : entries
-      @status_bar.push_status_text "Updated at: #{time_now}", 0
     end
   end
 
   def get_user_details name = nil
     return if @user == name
     @user = name || {:login => App.gh_login, :token => App.gh_token}
+    STDOUT << @user.inspect
     Thread.new do
       gh_user = User.new(@user)
       yield gh_user
@@ -117,8 +120,12 @@ class HMainFrame < MainFrame
     STDOUT << length_before
     @entries = entries
     @title_list.set entries.map { |el| el[:title] }
-    entries[0..(@entries.length-length_before)].each { |el| App.notify el[:author][:name], el[:title] } unless length_before == 0 or (length_before == @entries.length)
 
+    entries[0..(@entries.length-length_before)].each do |el|
+      App.notify el[:author][:name], el[:title]
+    end unless length_before == 0 or (length_before == @entries.length)
+
+    @status_bar.push_status_text "Updated at: #{time_now}", 0
   end
 
   def message(title, text)
