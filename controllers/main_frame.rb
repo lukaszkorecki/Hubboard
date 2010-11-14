@@ -128,6 +128,11 @@ private
     date.to_pretty
   end
   def time_now
-    "#{Time.now.hour}:#{Time.now.min}:#{Time.now.sec}"
+    [].tap do |time|
+      [:hour, :min, :sec].each do |num|
+        digit = Time.now.send num
+        time << ((digit > 9) ? digit : "0#{digit}")
+      end
+    end.join ':'
   end
 end
