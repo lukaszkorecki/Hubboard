@@ -107,14 +107,14 @@ class HMainFrame < MainFrame
   end
 
   def show_user_details gh_user
-    return missing_gh_cred if gh_user.data.nil?
+    return github_error if gh_user.data.nil?
     @user_avatar.bitmap = App.url_to_bitmap gh_user.avatar
     @details_html.page = HtmlTemplates::User.to_html gh_user
   end
 
   def show_dashboard entries
 
-    return missing_gh_cred unless entries
+    return github_error unless entries
 
     length_before = @entries.length
     STDOUT << length_before
@@ -132,8 +132,8 @@ class HMainFrame < MainFrame
     App.notify title, text
   end
 
-  def missing_gh_cred
-    message  APP_CONST['messages']['gitconfig_missing']['title'], APP_CONST['messages']['gitconfig_missing']['content'] unless @message_seen
+  def github_error
+    message  'Error', 'Problem connecting with GitHub! Check your settings! (or GitHub is down)'
     @message_seen = true
   end
 private
