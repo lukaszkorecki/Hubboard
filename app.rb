@@ -64,7 +64,7 @@ class Application < Wx::App
       @gh_login, @gh_token = username, token
       @main_frame.start!
     else
-      notify "wat?"
+      notify "Error", "Token and username can't be empty!"
     end
   end
 
