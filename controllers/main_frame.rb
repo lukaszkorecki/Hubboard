@@ -84,7 +84,7 @@ class HMainFrame < MainFrame
       entries = @feed.parse
       yield entries.empty? ? false : entries
       # start the timer after initial dashboard update
-      @timer.start 900000 # 15 minutes
+      @timer.start 15.minutes
     end
 
   end
