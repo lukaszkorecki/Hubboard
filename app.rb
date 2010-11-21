@@ -21,6 +21,7 @@ case RUBY_PLATFORM
     require 'lib/notifications/osx'
 end
 # application classes
+require 'lib/wx_helpers'
 require 'lib/default_browser'
 require 'lib/image_cache'
 require 'lib/github'

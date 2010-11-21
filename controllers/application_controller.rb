@@ -33,9 +33,11 @@ class Application < Wx::App
     # lets show some stuff, eh?
     @main_frame = HMainFrame.new
 
+    set_dock_icon
 
     @main_frame.size = Wx::Size.new 580, 425
     @main_frame.show
+
   end
 
   def get_preferences
@@ -79,6 +81,13 @@ class Application < Wx::App
 
     img = Wx::Image.new(c_img, handler)
     Wx::Bitmap.from_image(img)
+  end
+
+  def set_dock_icon
+    img = Wx::Image.new 'assets/icon_256.png' , Wx::BITMAP_TYPE_PNG, 0
+    @iconb = Wx::Icon.from_bitmap  Wx::Bitmap.from_image(img)
+    @tb = Wx::TaskBarIcon.new
+    @tb.set_icon @iconb, "Hubboard"
   end
 end
 
