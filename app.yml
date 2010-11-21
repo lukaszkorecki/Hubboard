@@ -1,7 +1,0 @@
-name: Hubboard
-author: Łukasz Korecki
-url: 'http://github.com/lukaszkorecki/Hubboard'
-messages:
-  gitconfig_missing:
-    title: Your GitHub settings are missing or are wrong!
-    content: "Run `git config -e` and confirm that GitHub setttings are present and correct.\nHubboard requires github.user and github.token entries to be present and valid."

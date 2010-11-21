@@ -1,88 +1,50 @@
-require 'boot'
+# Bootstrap file for Hubboard
 
-class Application < Wx::App
-  attr_reader :gh_login, :gh_token, :image_cache, :event_icons
+# Add vendor directories to load path
+Dir["vendor/**/lib"].each do |lib_path|
+  $LOAD_PATH << lib_path
+end
 
-  def on_init
-    # GitHub vars
-    notify "Hubboard", "Hello!"
+# load vendor libs
+require 'wx'
 
-    # image cache for avatars
-    @image_cache = ImageCache.new('hubboard')
-    @image_cache.setup ['avatars']
-    @image_cache.rebuild
+# stuff
+require 'yaml'
+require 'net/http'
+require 'net/https'
+require 'cgi'
 
-    # event icons take fron /assets
-    @event_icons = Icons.new
+# setup desktop notifications
+case RUBY_PLATFORM
+  when /darwin/
+    require 'growl'
+    require 'lib/notifications/osx'
+end
+# application classes
+require 'lib/default_browser'
+require 'lib/image_cache'
+require 'lib/github'
+require 'lib/pretty_date'
+require 'lib/icon_manager'
+require 'lib/int_minutes'
+require 'lib/preferences'
 
-
-    # Emulate the thread scheduler
-    # it is important to remember
-    # to test this values
-    # and NEVER call Thread.new {}.join!
-    # just create a thread, and let the
-    # "scheduler" do the rest
-    t = Wx::Timer.new(self, 55)
-    evt_timer(55) { Thread.pass }
-    t.start(100)
-    evt_idle { Thread.pass }
-
-
-    # preferences
-    @prefs = Preferences.new
-    get_preferences
-
-    # lets show some stuff, eh?
-    @main_frame = HMainFrame.new
-
-
-    @main_frame.size = Wx::Size.new 580, 425
-    @main_frame.show
-  end
-
-  def get_preferences
-    if @prefs.gh_data
-      puts @prefs.gh_data.to_yaml
-      @gh_login = @prefs.gh_data[:username]
-      @gh_token = @prefs.gh_data[:token]
-    else
-      @preferences_frame ||= HPreferencesFrame.new
-      @preferences_frame.show
-    end
-  end
-
-  def show_prefs
-    @preferences_frame ||= HPreferencesFrame.new
-    @preferences_frame.show
-    @preferences_frame.set_gh_settings @gh_login, @gh_token
-  end
-
-  def store_prefs
-    username, token = @preferences_frame.gh_settings
-    if username and token
-      @prefs.store_gh_data username, token
-      @gh_login, @gh_token = username, token
-      @main_frame.start!
-    else
-      notify "Error", "Token and username can't be empty!"
-    end
-  end
-
-  def notify title, message
-    @notif ||= Notification.new
-    @notif.message title, message
-  end
-
-  def url_to_bitmap img_url
-    c_img = @image_cache.do_it img_url, :subdir => 'avatars' # , :extension => "jpg"
-
-    # get correct image handler, based on `file` command (emulating mime-types)
-    type = `file #{c_img}`.to_s.split(" ")[1]
-    handler = Wx.const_get "BITMAP_TYPE_#{type}"
-
-    img = Wx::Image.new(c_img, handler)
-    Wx::Bitmap.from_image(img)
-  end
+# MVC - well, sort of :-)
+#
+# loads frames (views) and controllers automatically
+# technicaly controllers and views are the same
+# here's an explanation:
+# - view -> a class generated from .xrc file by xrcise tool, SHOULDN'T BE CHANGED
+# - controller -> the same class, but opened in a different class with
+#                 all the extra code added (events, getting data from models, etc)
+Dir["views/*.rb"].each do |frame_file|
+  require frame_file.sub(".rb","")
+end
+Dir["controllers/*.rb"].each do |event_file|
+  require event_file.sub(".rb","")
+end
+Dir["models/*.rb"].each do |model_file|
+  require model_file.sub(".rb","")
 end
 
 # we need application instance so that

@@ -73,7 +73,7 @@ class HMainFrame < MainFrame
     begin
       @event_icon.bitmap = Wx::Bitmap.from_image(Wx::Image.new ic)
     rescue => e
-      STDOUT << e.to_yaml
+      STDOUT << "icon error" << e.to_yaml
     end
 
   end
@@ -99,7 +99,6 @@ class HMainFrame < MainFrame
   def get_user_details name = nil
     return if @user == name
     @user = name || {:login => App.gh_login, :token => App.gh_token}
-    STDOUT << @user.inspect
     Thread.new do
       gh_user = User.new(@user)
       yield gh_user
@@ -117,7 +116,6 @@ class HMainFrame < MainFrame
     return github_error unless entries
 
     length_before = @entries.length
-    STDOUT << length_before
     @entries = entries
     @title_list.set entries.map { |el| el[:title] }
 

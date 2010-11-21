@@ -1,5 +1,8 @@
 class HPreferencesFrame < PrefrencesFrame
 
+  # FIXME this should be decoupled
+  # app.store_prefs should be set by the app class
+  # not here
   def on_init
     evt_button(@apply_prefs_button.get_id) do
       App.store_prefs
