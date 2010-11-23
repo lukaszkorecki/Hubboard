@@ -22,7 +22,6 @@ case RUBY_PLATFORM
 end
 # application classes
 require 'lib/wx_helpers'
-require 'lib/default_browser'
 require 'lib/image_cache'
 require 'lib/github'
 require 'lib/pretty_date'
