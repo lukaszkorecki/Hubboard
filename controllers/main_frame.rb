@@ -15,6 +15,7 @@ class HMainFrame < MainFrame
     evt_html_link_clicked(@details_html.get_id) { |ev| handle_url(ev) }
     evt_html_link_clicked(@event_content.get_id) { |ev| handle_url(ev) }
 
+    evt_close { App.exit_main_loop }
     # map toolbar click to events
     # TODO refactor this once it's all
     # settled
