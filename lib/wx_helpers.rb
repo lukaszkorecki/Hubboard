@@ -1,13 +1,4 @@
 module Wx
-  # overrides default popup menu handler
-  # for dock icon
-  class TaskBarIcon
-    def create_popup_menu *args
-      STDOUT << "lol"
-      nil
-    end
-  end
-
   # opens an url in default browser
   def self.launch_in_default_browser(url)
     case RUBY_PLATFORM
@@ -20,5 +11,13 @@ module Wx
     else
       raise "Can't handle windows for now!"
     end
+  end
+end
+
+class SimpleTaskBarIcon < Wx::TaskBarIcon
+  # overrides default popup menu handler
+  # for dock icon
+  def create_popup_menu *args
+    nil
   end
 end

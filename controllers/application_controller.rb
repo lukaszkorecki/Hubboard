@@ -86,7 +86,7 @@ class Application < Wx::App
   def set_dock_icon
     img = Wx::Image.new 'assets/icon_256.png' , Wx::BITMAP_TYPE_PNG, 0
     @iconb = Wx::Icon.from_bitmap  Wx::Bitmap.from_image(img)
-    @tb = Wx::TaskBarIcon.new
+    @tb = SimpleTaskBarIcon.new
     @tb.set_icon @iconb, "Hubboard"
   end
 end
