@@ -9,10 +9,13 @@ class HPreferencesFrame < PrefrencesFrame
     end
   end
 
+  # sets values of text boxes in pref window
   def set_gh_settings username, token
     @gh_username_text.value = username
     @gh_token_text.value = token
   end
+
+  # reads data from text boxes
   def gh_settings
     data =  [
       @gh_username_text.value.strip.chomp,

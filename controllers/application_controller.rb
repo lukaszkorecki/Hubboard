@@ -26,11 +26,10 @@ class Application < Wx::App
     evt_idle { Thread.pass }
 
 
-    # preferences
+    # preferences window
     @prefs = Preferences.new
     get_preferences
 
-    # lets show some stuff, eh?
     @main_frame = HMainFrame.new
 
     set_dock_icon
@@ -58,7 +57,7 @@ class Application < Wx::App
 
   def store_prefs
     username, token = @preferences_frame.gh_settings
-    if username and token
+    if username and token and not(username.empty? or token.empty?)
       @prefs.store_gh_data username, token
       @gh_login, @gh_token = username, token
       @main_frame.start!
@@ -90,4 +89,3 @@ class Application < Wx::App
     @tb.set_icon @iconb, "Hubboard"
   end
 end
-

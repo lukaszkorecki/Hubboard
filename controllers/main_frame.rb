@@ -1,5 +1,6 @@
 class HMainFrame < MainFrame
   include Github
+
   def on_init
 
     @entries = []
@@ -46,17 +47,21 @@ class HMainFrame < MainFrame
     @timer = Wx::Timer.new self, 31337
   end
 
+
+  # get dashboard and current user info on startup
   def start!
-    # get dashboard and current user info on startup
     get_user_details { |details| show_user_details details }
     get_gh_dashboard { |entries|  show_dashboard entries }
   end
 
+  # process clicks in html windows
   def handle_url event
     url = event.link_info.href
     url = "http://github.com#{url}" unless url =~ /^http/
     Wx::launch_in_default_browser url
   end
+
+  # load content and metadata associated with an event
   def show_event_content ev
     @event_content.page = format_content @entries[ev.index][:content]
 
@@ -71,6 +76,9 @@ class HMainFrame < MainFrame
     @current_url = @entries[ev.index][:link]
 
     ic = App.event_icons.from_title(@entries[ev.index][:title])
+
+    # sometimes loading an image of a known type but with wrong
+    # extensions causes wxRuby to throw an error
     begin
       @event_icon.bitmap = Wx::Bitmap.from_image(Wx::Image.new ic)
     rescue => e
@@ -79,6 +87,7 @@ class HMainFrame < MainFrame
 
   end
 
+  # download events asynchronously
   def get_gh_dashboard
     Thread.new do
       @feed ||= Feed.new(:login => App.gh_login, :token => App.gh_token)
@@ -90,6 +99,7 @@ class HMainFrame < MainFrame
 
   end
 
+  # update events asynchronously
   def update_gh_dashboard
     Thread.new do
       entries = @feed.parse_and_update
@@ -97,6 +107,7 @@ class HMainFrame < MainFrame
     end
   end
 
+  # get details of a user
   def get_user_details name = nil
     return if @user == name
     @user = name || {:login => App.gh_login, :token => App.gh_token}
@@ -106,12 +117,15 @@ class HMainFrame < MainFrame
     end
   end
 
+  # view method - load user info into specified html window
+  # and her/his avatar
   def show_user_details gh_user
     return github_error if gh_user.data.nil?
     @user_avatar.bitmap = App.url_to_bitmap gh_user.avatar
     @details_html.page = HtmlTemplates::User.to_html gh_user
   end
 
+  # view method - populates the list of events
   def show_dashboard entries
 
     return github_error unless entries
@@ -127,15 +141,18 @@ class HMainFrame < MainFrame
     @status_bar.push_status_text "Updated at: #{time_now}", 0
   end
 
+  # thin (Very thin!) wrapper around notification method
   def message(title, text)
     App.notify title, text
   end
 
+  # helper method for notifying about connection/auth problems
   def github_error
     message  'Error', 'Problem connecting with GitHub! Check your settings! (or GitHub is down)'
-    @message_seen = true
   end
 private
+
+  # helper method - strips out most of the unwanted markup from event content
   def format_content content
     # FIXME suboptimal
 
@@ -143,10 +160,14 @@ private
       CGI::unescapeHTML line
     end.join ""
   end
+
+  # fuzzy date helper
   def fuzzy_date(date_a)
     date = DateTime.parse(date_a, true)
     date.to_pretty
   end
+
+  # helper method for formatting date (probably can be done better ;-))
   def time_now
     [].tap do |time|
       [:hour, :min, :sec].each do |num|
