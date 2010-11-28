@@ -1,43 +1,44 @@
 require 'rubygems'
+require 'fileutils'
+include FileUtils
 namespace :osx do
-  OSX_DEV_COMMAND = "arch -i386 /usr/bin/ruby -rubygems -C . app.rb"
-  OSX_COMMAND = "arch -i386 /usr/bin/ruby -C . app.rb"
-  desc "run the application on OSX (needs wx gem)"
-  task :run_dev do
-    STDOUT << `#{OSX_DEV_COMMAND}`
+  desc "get dependencies and put them into vendor/"
+  task :get_dependencies do
+    STDOUT << 'Installing gems via bundler'
+    STDOUT << `bundle install vendor --without linux`
+    STDOUT << 'Downloading wxruby'
+    STDOUT << `curl -L -A Firefox  http://rubyforge.org/frs/download.php/63386/wxruby-2.0.1-universal-darwin-9.gem > wxruby-2.0.1.gem`
+    STDOUT << 'Deploying wxruby to vendor'
+    STDOUT << `gem install wxruby-2.0.1.gem -i vendor/ruby/1.8/gems`
+    rm 'wxruby-2.0.1.gem'
   end
+
+  desc "run application"
   task :run do
-    STDOUT << `#{OSX_COMMAND}`
+    STDOUT << `arch -i386 /usr/bin/ruby -C . app.rb`
   end
 end
+
 namespace :linux do
   desc "runs  the app on linux using rubygems"
   task :run do
     `ruby -rubygems app.rb`
   end
 end
+
 namespace :wx do
   desc "generate all ruby classes from XRC files"
   task :generate do
-    Dir["frames/*.xrc"].each do |file|
-      `xrcise #{file} > #{file.sub(".xrc", ".rb").sub("frames/","views/")}`
-    end
-  end
-end
-namespace :app do
-  desc "download and unpack all gems using bundler"
-  task :package_gems do
-    `bundle install vendor --without test --disable-shared-gems`
-  end
-  desc "regenrates xrc class loader from xrc file"
-  task  :wx_generate do
     STDOUT << `xrcise views/hubboard_views.xrc > views/hubboard_views.rb`
   end
 end
-desc "run tests"
+
+desc "run tests with detailed output"
 task :spec_details do
   STDOUT << `spec -c -fn spec`
 end
+
+desc 'run test without details'
 task :spec do
   STDOUT << `spec spec`
 end
