@@ -11,8 +11,6 @@ class HMainFrame < MainFrame
     # setup events
     evt_listbox(@title_list.get_id) { |ev| show_event_content ev }
 
-    evt_button(@visit_button.get_id) { Wx::launch_in_default_browser @current_url}
-
     evt_html_link_clicked(@details_html.get_id) { |ev| handle_url(ev) }
     evt_html_link_clicked(@event_content.get_id) { |ev| handle_url(ev) }
 
@@ -20,6 +18,7 @@ class HMainFrame < MainFrame
     # map toolbar click to events
     # TODO refactor this once it's all
     # settled
+    evt_tool(@see_on_gh_tool) {  handle_url(nil, "https://github.com" ) }
     evt_tool(@preferences_tool) { App.show_prefs }
 
     evt_tool(@refresh_tool) do
@@ -55,8 +54,8 @@ class HMainFrame < MainFrame
   end
 
   # process clicks in html windows
-  def handle_url event
-    url = event.link_info.href
+  def handle_url event=nil, url_str=nil
+    url = url_str || event.link_info.href
     url = "http://github.com#{url}" unless url =~ /^http/
     Wx::launch_in_default_browser url
   end
@@ -73,7 +72,8 @@ class HMainFrame < MainFrame
       show_user_details details
     end
 
-    @current_url = @entries[ev.index][:link]
+
+    @gh_visit_link.url = @entries[ev.index][:link]
 
     ic = App.event_icons.from_title(@entries[ev.index][:title])
 
