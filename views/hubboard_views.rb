@@ -4,15 +4,15 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Nov 14 16:42:00 +0000 2010
+# Generated at: Sat Dec 04 18:13:39 +0000 2010
 
 class MainFrame < Wx::Frame
 	
-	attr_reader :main_toolbar, :refresh_tool, :gist_new_tool,
-              :gist_browser_tool, :preferences_tool, :m_splitter1,
-              :m_panel2, :title_list, :m_panel3, :event_icon,
-              :title_label, :event_content, :published_label,
-              :visit_button, :details_html, :user_avatar, :status_bar
+	attr_reader :main_toolbar, :refresh_tool, :see_on_gh_tool,
+              :preferences_tool, :m_splitter1, :m_panel2, :title_list,
+              :m_panel3, :event_icon, :title_label, :event_content,
+              :published_label, :gh_visit_link, :details_html,
+              :user_avatar, :status_bar
 	
 	def initialize(parent = nil)
 		super()
@@ -35,8 +35,7 @@ class MainFrame < Wx::Frame
 		
 		@main_toolbar = finder.call("main_toolbar")
 		@refresh_tool = finder.call("refresh_tool")
-		@gist_new_tool = finder.call("gist_new_tool")
-		@gist_browser_tool = finder.call("gist_browser_tool")
+		@see_on_gh_tool = finder.call("see_on_gh_tool")
 		@preferences_tool = finder.call("preferences_tool")
 		@m_splitter1 = finder.call("m_splitter1")
 		@m_panel2 = finder.call("m_panel2")
@@ -46,7 +45,7 @@ class MainFrame < Wx::Frame
 		@title_label = finder.call("title_label")
 		@event_content = finder.call("event_content")
 		@published_label = finder.call("published_label")
-		@visit_button = finder.call("visit_button")
+		@gh_visit_link = finder.call("gh_visit_link")
 		@details_html = finder.call("details_html")
 		@user_avatar = finder.call("user_avatar")
 		@status_bar = finder.call("status_bar")
@@ -63,7 +62,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Nov 14 16:42:00 +0000 2010
+# Generated at: Sat Dec 04 18:13:39 +0000 2010
 
 class NewGistFrame < Wx::Frame
 	
@@ -111,7 +110,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Nov 14 16:42:00 +0000 2010
+# Generated at: Sat Dec 04 18:13:39 +0000 2010
 
 class PrefrencesFrame < Wx::Frame
 	
