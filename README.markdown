@@ -49,3 +49,9 @@ Usual rules: fork, feature branch, pull request. Thanks!
 ## Credits
 
 [Fugue Icon Set](http://p.yusukekamiyamane.com/) by [Yusuke Kamiyamane](http://p.yusukekamiyamane.com/about/)
+
+## TODO
+
+* fix issues
+* once Linux version works - add support for notifications
+* Gist support (CRUD)
