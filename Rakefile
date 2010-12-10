@@ -17,6 +17,15 @@ namespace :osx do
   task :run do
     STDOUT << `arch -i386 /usr/bin/ruby -C . app.rb`
   end
+
+  desc "package using platypus"
+  task :package do
+    current_path = FileUtils.pwd
+    command = "/usr/local/bin/platypus -BR -a 'Hubboard' -o 'None' -p '/usr/bin/env' -I 'com.coffeesounds.Hubboard' "
+    command << [ 'app.rb', 'assets', 'bin', 'controllers', 'lib', 'osx_run', 'vendor', 'views'].map { |dir| "-f '#{current_path}/#{dir}'"}.join(" ")
+    command << " -G 'bash'  -c '#{current_path}/osx_run' 'Hubboard.app'"
+    STDOUT << `#{command}`
+  end
 end
 
 namespace :linux do
