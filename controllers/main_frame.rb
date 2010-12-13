@@ -134,7 +134,7 @@ class HMainFrame < MainFrame
     @entries = entries
     @title_list.set entries.map { |el| el[:title] }
 
-    entries[0..(@entries.length-length_before)].each do |el|
+    entries[0..(@entries.length-length_before)-1].each do |el|
       App.notify el[:author][:name], el[:title]
     end unless length_before == 0 or (length_before == @entries.length)
 
