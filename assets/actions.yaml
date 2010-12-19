@@ -9,6 +9,7 @@ repo:
   created_branch: 'arrow-branch-090.png'
   commented: 'balloon-white.png'
   added_user: 'user-medical.png'
+  open_source: 'paper-plane.png'
 pull_request:
   merged: 'bandaid--arrow.png'
   opened: 'bandaid--plus.png'

@@ -32,6 +32,8 @@ class Icons
         get 'repo', 'created_tag'
       when /created branch/
         get 'repo', 'created_branch'
+      when /open sourced/
+        get 'repo', 'open_source'
       # pull requests
       when /opened pull request/
         get "pull_request", 'opened'

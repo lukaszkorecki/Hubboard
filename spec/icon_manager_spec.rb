@@ -52,6 +52,11 @@ describe Icons do
         tit = 'pdc created tag 2010.10'
         @icons.from_title(tit).should == 'assets/tag--plus.png'
       end
+      it 'should get paper plane icon for "open sourced" event' do
+
+        tit = 'lol open sourced "lol boat"'
+        @icons.from_title(tit).should == 'assets/paper-plane.png'
+      end
     end
     context 'issues' do
       it 'should get issue open icon' do
