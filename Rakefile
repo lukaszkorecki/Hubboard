@@ -1,21 +1,35 @@
 require 'rubygems'
 require 'fileutils'
+require 'yaml'
+
 include FileUtils
+
 namespace :osx do
   desc "get dependencies and put them into vendor/"
   task :get_dependencies do
-    STDOUT << 'Installing gems via bundler'
-    STDOUT << `bundle install vendor --without linux`
-    STDOUT << 'Downloading wxruby'
-    STDOUT << `curl -L -A Firefox  http://rubyforge.org/frs/download.php/63386/wxruby-2.0.1-universal-darwin-9.gem > wxruby-2.0.1.gem`
-    STDOUT << 'Deploying wxruby to vendor'
-    STDOUT << `gem install wxruby-2.0.1.gem -i vendor/ruby/1.8/gems`
+    STDERR << 'Installing gems via bundler'
+    STDERR << `bundle install vendor --without linux test`
+    STDERR << 'Downloading wxruby'
+    STDERR << `curl -L -A Firefox  http://rubyforge.org/frs/download.php/63386/wxruby-2.0.1-universal-darwin-9.gem > wxruby-2.0.1.gem`
+    STDERR << 'Deploying wxruby to vendor'
+    STDERR << `gem install wxruby-2.0.1.gem -i vendor/ruby/1.8/gems`
     rm 'wxruby-2.0.1.gem'
+
+    STDERR << 'Cleaning up the gem'
+    path = "vendor/ruby/1.8/gems/gems/wxruby-2.0.1-universal-darwin-9"
+    nuke_these = [
+      'INSTALL',
+      'LICENSE',
+      'README',
+      'art/',
+      'samples/'
+    ].map { | entry | "#{path}/#{entry}"}
+    rm_r(nuke_these, :force => true)
   end
 
   desc "run application"
   task :run do
-    STDOUT << `arch -i386 bin/Hubboard -C . app.rb`
+    STDERR << `arch -i386 bin/Hubboard -C . app.rb`
   end
 
   desc "package using platypus"
@@ -52,18 +66,18 @@ end
 namespace :wx do
   desc "generate all ruby classes from XRC files"
   task :generate do
-    STDOUT << `xrcise views/hubboard_views.xrc > views/hubboard_views.rb`
+    STDERR << `xrcise views/hubboard_views.xrc > views/hubboard_views.rb`
   end
 end
 
 desc "run tests with detailed output"
 task :spec_details do
-  STDOUT << `spec -c -fn spec`
+  STDERR << `spec -c -fn spec`
 end
 
 desc 'run test without details'
 task :spec do
-  STDOUT << `spec spec`
+  STDERR << `spec spec`
 end
 
 task :default => [:spec]
