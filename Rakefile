@@ -21,22 +21,23 @@ namespace :osx do
   desc "package using platypus"
   task :package do
     current_path = FileUtils.pwd
+    build_conf = YAML::load_file 'build.yaml'
+
     cmd =[ '/usr/local/bin/platypus -B']
-    cmd << "-a 'Hubboard'"
-    cmd << "-i assets/icon_256.png"
+    cmd << "-a '#{build_conf['name']}'"
+    cmd << "-i #{build_conf['icon']}"
+    cmd << "-V '#{build_conf['version']}'"
+    cmd << "-u '#{build_conf['author']}'"
+    cmd << "-I '#{build_conf['descr']}'"
     cmd << "-o 'None'"
     cmd << "-p '/usr/bin/env'"
-    cmd << "-I 'com.coffeesounds.Hubboard'"
-    cmd << "-f '#{current_path}/app.rb'"
-    cmd << "-f '#{current_path}/assets'"
-    cmd << "-f '#{current_path}/bin'"
-    cmd << "-f '#{current_path}/controllers'"
-    cmd << "-f '#{current_path}/lib'"
-    cmd << "-f '#{current_path}/osx_run'"
-    cmd << "-f '#{current_path}/vendor'"
-    cmd << "-f '#{current_path}/views'"
+    cmd << "-I '#{build_conf['descr']}'"
+
+    build_conf['files'].each do |asset|
+      cmd << "-f '#{current_path}/#{asset}'"
+    end
     cmd << "-G 'bash'"
-    cmd << "-c '#{current_path}/osx_run' 'Hubboard.app'"
+    cmd << "-c '#{current_path}/osx_run' '#{build_conf['name']}.app'"
     STDERR << `#{cmd.join(" ")}`
   end
 end

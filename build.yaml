@@ -1,0 +1,14 @@
+name: Hubboard
+author: Łukasz Korecki
+version: 0.2
+icon: 'assets/icon_256.png'
+descr: com.coffeesounds.Hubboard
+files:
+  - 'app.rb'
+  - 'assets'
+  - 'bin'
+  - 'controllers'
+  - 'lib'
+  - 'osx_run'
+  - 'vendor'
+  - 'views'
