@@ -4,3 +4,4 @@ data.yml
 Hubboard.app
 .DS_Store
 wxruby-2.0.1.gem
+.rvmrc
