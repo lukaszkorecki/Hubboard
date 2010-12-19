@@ -34,7 +34,7 @@ class Application < Wx::App
 
     set_dock_icon
 
-    @main_frame.size = Wx::Size.new 580, 425
+    @main_frame.size = Wx::Size.new 700, 425
     @main_frame.show
 
   end

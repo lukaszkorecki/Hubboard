@@ -37,7 +37,7 @@
             <property name="minimum_size">500,300</property>
             <property name="name">main_frame</property>
             <property name="pos"></property>
-            <property name="size">500,300</property>
+            <property name="size">700,420</property>
             <property name="style">wxDEFAULT_FRAME_STYLE|wxSYSTEM_MENU</property>
             <property name="subclass">MainFrame; </property>
             <property name="title">Hubboard</property>
