@@ -15,16 +15,29 @@ namespace :osx do
 
   desc "run application"
   task :run do
-    STDOUT << `arch -i386 /usr/bin/ruby -C . app.rb`
+    STDOUT << `arch -i386 bin/Hubboard -C . app.rb`
   end
 
   desc "package using platypus"
   task :package do
     current_path = FileUtils.pwd
-    command = "/usr/local/bin/platypus -y  -a 'Hubboard' -o 'None' -p '/usr/bin/env' -I 'com.coffeesounds.Hubboard' "
-    command << [ 'app.rb', 'assets', 'bin', 'controllers', 'lib', 'osx_run', 'vendor', 'views'].map { |dir| "-f '#{current_path}/#{dir}'"}.join(" ")
-    command << " -G 'bash'  -c '#{current_path}/osx_run' 'Hubboard.app'"
-    STDOUT << `#{command}`
+    cmd =[ '/usr/local/bin/platypus -B']
+    cmd << "-a 'Hubboard'"
+    cmd << "-i assets/icon_256.png"
+    cmd << "-o 'None'"
+    cmd << "-p '/usr/bin/env'"
+    cmd << "-I 'com.coffeesounds.Hubboard'"
+    cmd << "-f '#{current_path}/app.rb'"
+    cmd << "-f '#{current_path}/assets'"
+    cmd << "-f '#{current_path}/bin'"
+    cmd << "-f '#{current_path}/controllers'"
+    cmd << "-f '#{current_path}/lib'"
+    cmd << "-f '#{current_path}/osx_run'"
+    cmd << "-f '#{current_path}/vendor'"
+    cmd << "-f '#{current_path}/views'"
+    cmd << "-G 'bash'"
+    cmd << "-c '#{current_path}/osx_run' 'Hubboard.app'"
+    STDERR << `#{cmd.join(" ")}`
   end
 end
 
