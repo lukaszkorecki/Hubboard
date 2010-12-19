@@ -4,7 +4,7 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sat Dec 04 18:13:39 +0000 2010
+# Generated at: Sun Dec 19 13:00:07 +0000 2010
 
 class MainFrame < Wx::Frame
 	
@@ -62,7 +62,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sat Dec 04 18:13:39 +0000 2010
+# Generated at: Sun Dec 19 13:00:07 +0000 2010
 
 class NewGistFrame < Wx::Frame
 	
@@ -110,11 +110,11 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sat Dec 04 18:13:39 +0000 2010
+# Generated at: Sun Dec 19 13:00:07 +0000 2010
 
 class PrefrencesFrame < Wx::Frame
 	
-	attr_reader :m_statictext7, :gh_username_text, :text2354,
+	attr_reader :m_panel5, :m_statictext7, :gh_username_text, :text2354,
               :gh_token_text, :apply_prefs_button
 	
 	def initialize(parent = nil)
@@ -136,6 +136,7 @@ class PrefrencesFrame < Wx::Frame
 			end
 		end
 		
+		@m_panel5 = finder.call("m_panel5")
 		@m_statictext7 = finder.call("m_staticText7")
 		@gh_username_text = finder.call("gh_username_text")
 		@text2354 = finder.call("text2354")

@@ -15,6 +15,7 @@ class HMainFrame < MainFrame
     evt_html_link_clicked(@event_content.get_id) { |ev| handle_url(ev) }
 
     evt_close { App.exit_main_loop }
+
     # map toolbar click to events
     # TODO refactor this once it's all
     # settled
@@ -82,7 +83,7 @@ class HMainFrame < MainFrame
     begin
       @event_icon.bitmap = Wx::Bitmap.from_image(Wx::Image.new ic)
     rescue => e
-      STDOUT << "icon error" << e.to_yaml
+      STDERR << "icon error" << e.to_yaml
     end
 
   end

@@ -4,9 +4,13 @@ class HPreferencesFrame < PrefrencesFrame
   # app.store_prefs should be set by the app class
   # not here
   def on_init
-    evt_button(@apply_prefs_button.get_id) do
+    store_prefs_proc = lambda do
+      STDERR << 'Stored prefs'
       App.store_prefs
     end
+    evt_button(@apply_prefs_button.get_id) {store_prefs_proc.call}
+    evt_text_enter(@gh_username_text.get_id) {store_prefs_proc.call}
+    evt_text_enter(@gh_token_text.get_id) {store_prefs_proc.call}
   end
 
   # sets values of text boxes in pref window
