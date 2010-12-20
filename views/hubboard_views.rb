@@ -4,13 +4,13 @@
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Dec 19 16:32:49 +0000 2010
+# Generated at: Mon Dec 20 21:36:58 +0000 2010
 
 class MainFrame < Wx::Frame
 	
 	attr_reader :main_toolbar, :refresh_tool, :see_on_gh_tool,
-              :preferences_tool, :m_splitter1, :m_panel2, :title_list,
-              :m_panel3, :event_icon, :title_label, :event_content,
+              :preferences_tool, :m_splitter1, :list_panel, :m_panel3,
+              :event_icon, :title_label, :event_content,
               :published_label, :gh_visit_link, :details_html,
               :user_avatar, :status_bar
 	
@@ -38,8 +38,7 @@ class MainFrame < Wx::Frame
 		@see_on_gh_tool = finder.call("see_on_gh_tool")
 		@preferences_tool = finder.call("preferences_tool")
 		@m_splitter1 = finder.call("m_splitter1")
-		@m_panel2 = finder.call("m_panel2")
-		@title_list = finder.call("title_list")
+		@list_panel = finder.call("list_panel")
 		@m_panel3 = finder.call("m_panel3")
 		@event_icon = finder.call("event_icon")
 		@title_label = finder.call("title_label")
@@ -62,7 +61,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Dec 19 16:32:49 +0000 2010
+# Generated at: Mon Dec 20 21:36:58 +0000 2010
 
 class NewGistFrame < Wx::Frame
 	
@@ -110,7 +109,7 @@ end
 # this class and extend its behaviour there.  
 #
 # Source file: views/hubboard_views.xrc 
-# Generated at: Sun Dec 19 16:32:49 +0000 2010
+# Generated at: Mon Dec 20 21:36:58 +0000 2010
 
 class PrefrencesFrame < Wx::Frame
 	

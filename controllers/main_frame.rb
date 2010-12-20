@@ -2,11 +2,18 @@ class HMainFrame < MainFrame
   include Github
 
   def on_init
+    begin
+      @title_list = HHtmlList.new @list_panel
+      @list_panel.sizer.add @title_list, 1, Wx::ALL|Wx::GROW
+    rescue => e
+      STDERR << e.to_yaml
+    end
 
     @entries = []
     @user = ''
 
     start!
+
 
     # setup events
     evt_listbox(@title_list.get_id) { |ev| show_event_content ev }
@@ -133,7 +140,7 @@ class HMainFrame < MainFrame
 
     length_before = @entries.length
     @entries = entries
-    @title_list.set entries.map { |el| el[:title] }
+    @title_list.set entries.map { |el| "<p>#{el[:title]}</p>" }
 
     entries[0..(@entries.length-length_before)-1].each do |el|
       App.notify el[:author][:name], el[:title]
